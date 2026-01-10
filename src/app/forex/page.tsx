@@ -1,5 +1,4 @@
 import { supabase } from '@/lib/supabase'
-import Link from 'next/link'
 
 async function getForexRankings() {
   const { data, error } = await supabase
@@ -28,12 +27,6 @@ export default async function ForexPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <Link href="/" className="text-blue-500 hover:text-blue-700 text-sm">
-          Back to Home
-        </Link>
-      </div>
-
       <div className="bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl p-6 mb-8">
         <h1 className="text-3xl font-bold text-white">Forex</h1>
         <p className="text-white/80 mt-2">EUR/USD Trading Benchmark</p>

@@ -1,5 +1,4 @@
 import { supabase } from '@/lib/supabase'
-import Link from 'next/link'
 
 interface Model {
   id: string
@@ -87,12 +86,6 @@ export default async function ModelsPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <Link href="/" className="text-blue-500 hover:text-blue-700 text-sm">
-          Back to Home
-        </Link>
-      </div>
-
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">AI Models</h1>
         <p className="text-gray-600 mt-2">All AI models participating in the trading benchmark</p>

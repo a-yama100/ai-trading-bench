@@ -1,14 +1,7 @@
-import Link from 'next/link'
 
 export default function PrivacyPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <Link href="/" className="text-blue-500 hover:text-blue-700 text-sm">
-          Back to Home
-        </Link>
-      </div>
-
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
 
       <div className="prose prose-gray max-w-none space-y-6">

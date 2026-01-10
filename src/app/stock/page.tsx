@@ -1,5 +1,4 @@
 import { supabase } from '@/lib/supabase'
-import Link from 'next/link'
 
 async function getStockRankings() {
   const { data, error } = await supabase
@@ -28,12 +27,6 @@ export default async function StockPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <Link href="/" className="text-blue-500 hover:text-blue-700 text-sm">
-          Back to Home
-        </Link>
-      </div>
-
       <div className="bg-gradient-to-r from-green-400 to-green-600 rounded-xl p-6 mb-8">
         <h1 className="text-3xl font-bold text-white">Stock</h1>
         <p className="text-white/80 mt-2">S&P 500 Trading Benchmark</p>
