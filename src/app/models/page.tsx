@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import Link from 'next/link'
 
 interface Model {
   id: string
@@ -88,7 +89,7 @@ export default async function ModelsPage() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">AI Models</h1>
-        <p className="text-gray-600 mt-2">All AI models participating in the trading benchmark</p>
+        <p className="text-gray-600 mt-2">All AI models participating in the trading benchmark. Click on a model to view detailed performance.</p>
       </div>
 
       <div className="space-y-8">
@@ -101,7 +102,11 @@ export default async function ModelsPage() {
               {providerModels.map((model: Model) => {
                 const modelStats = stats[model.id]
                 return (
-                  <div key={model.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50">
+                  <Link
+                    key={model.id}
+                    href={'/models/' + model.id}
+                    className="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors block"
+                  >
                     <div className="flex items-center gap-4">
                       <span className={getProviderColor(provider) + ' px-3 py-1 rounded-full text-xs font-medium'}>
                         {getProviderName(provider)}
@@ -111,19 +116,24 @@ export default async function ModelsPage() {
                         <p className="text-sm text-gray-500">{model.id}</p>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex items-center gap-4">
                       {modelStats ? (
                         <>
-                          <p className={modelStats.avgReturn >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
-                            {modelStats.avgReturn >= 0 ? '+' : ''}{modelStats.avgReturn.toFixed(2)}% avg
-                          </p>
-                          <p className="text-sm text-gray-500">{modelStats.runCount} runs</p>
+                          <div>
+                            <p className={modelStats.avgReturn >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                              {modelStats.avgReturn >= 0 ? '+' : ''}{modelStats.avgReturn.toFixed(2)}% avg
+                            </p>
+                            <p className="text-sm text-gray-500">{modelStats.runCount} runs</p>
+                          </div>
                         </>
                       ) : (
                         <p className="text-gray-400">No data</p>
                       )}
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
-                  </div>
+                  </Link>
                 )
               })}
             </div>

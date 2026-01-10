@@ -1,9 +1,10 @@
 import { supabase } from '@/lib/supabase'
+import Link from 'next/link'
 
 async function getCryptoRankings() {
   const { data, error } = await supabase
     .from('benchmark_runs')
-    .select('id, model_id, return_pct, total_trades, winning_trades, initial_balance, final_balance, finished_at, models(display_name)')
+    .select('id, model_id, return_pct, total_trades, winning_trades, initial_balance, final_balance, finished_at, models(display_name, provider)')
     .eq('category_id', 'crypto')
     .eq('status', 'completed')
     .order('return_pct', { ascending: false })
@@ -22,8 +23,25 @@ function RankBadge({ rank }: { rank: number }) {
   return <span className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-medium">{rank}</span>
 }
 
+function getProviderColor(provider: string) {
+  switch (provider) {
+    case 'openai': return 'bg-green-100 text-green-800'
+    case 'anthropic': return 'bg-orange-100 text-orange-800'
+    case 'google': return 'bg-blue-100 text-blue-800'
+    case 'xai': return 'bg-purple-100 text-purple-800'
+    default: return 'bg-gray-100 text-gray-800'
+  }
+}
+
 export default async function CryptoPage() {
   const rankings = await getCryptoRankings()
+
+  const totalRuns = rankings.length
+  const avgReturn = totalRuns > 0 
+    ? rankings.reduce((sum, r) => sum + Number(r.return_pct), 0) / totalRuns 
+    : 0
+  const bestReturn = totalRuns > 0 ? Number(rankings[0]?.return_pct) : 0
+  const worstReturn = totalRuns > 0 ? Number(rankings[rankings.length - 1]?.return_pct) : 0
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -32,9 +50,33 @@ export default async function CryptoPage() {
         <p className="text-white/80 mt-2">BTC/USD Trading Benchmark</p>
       </div>
 
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white rounded-xl shadow p-4 text-center">
+          <p className="text-sm text-gray-500">Total Runs</p>
+          <p className="text-2xl font-bold text-gray-900">{totalRuns}</p>
+        </div>
+        <div className="bg-white rounded-xl shadow p-4 text-center">
+          <p className="text-sm text-gray-500">Avg Return</p>
+          <p className={'text-2xl font-bold ' + (avgReturn >= 0 ? 'text-green-600' : 'text-red-600')}>
+            {avgReturn >= 0 ? '+' : ''}{avgReturn.toFixed(2)}%
+          </p>
+        </div>
+        <div className="bg-white rounded-xl shadow p-4 text-center">
+          <p className="text-sm text-gray-500">Best Return</p>
+          <p className="text-2xl font-bold text-green-600">+{bestReturn.toFixed(2)}%</p>
+        </div>
+        <div className="bg-white rounded-xl shadow p-4 text-center">
+          <p className="text-sm text-gray-500">Worst Return</p>
+          <p className={'text-2xl font-bold ' + (worstReturn >= 0 ? 'text-green-600' : 'text-red-600')}>
+            {worstReturn >= 0 ? '+' : ''}{worstReturn.toFixed(2)}%
+          </p>
+        </div>
+      </div>
+
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-800">Leaderboard</h2>
+          <p className="text-sm text-gray-500 mt-1">Click on a model to view detailed performance</p>
         </div>
         
         <div className="overflow-x-auto">
@@ -57,14 +99,22 @@ export default async function CryptoPage() {
                   ? ((run.winning_trades / run.total_trades) * 100).toFixed(1)
                   : '0.0'
                 return (
-                  <tr key={run.id} className="hover:bg-gray-50">
+                  <tr key={run.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <RankBadge rank={index + 1} />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="font-medium text-gray-900">
-                        {modelData?.display_name || run.model_id}
-                      </span>
+                      <Link href={'/crypto/' + run.model_id} className="flex items-center gap-3 group">
+                        <span className={getProviderColor(modelData?.provider) + ' px-2 py-0.5 rounded text-xs font-medium'}>
+                          {modelData?.provider || 'unknown'}
+                        </span>
+                        <span className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                          {modelData?.display_name || run.model_id}
+                        </span>
+                        <svg className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right">
                       <span className={Number(run.return_pct) >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>

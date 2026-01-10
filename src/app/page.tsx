@@ -1,126 +1,60 @@
-import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import Link from 'next/link'
 
-interface RankingItem {
-  rank: number
-  model: string
-  returnPct: number
+interface CategoryData {
+  id: string
+  name: string
+  subtitle: string
+  gradient: string
+  href: string
 }
 
-interface CategoryRankings {
-  crypto: RankingItem[]
-  forex: RankingItem[]
-  stock: RankingItem[]
-}
+const CATEGORIES: CategoryData[] = [
+  { id: 'crypto', name: 'Cryptocurrency', subtitle: 'BTC/USD', gradient: 'from-orange-400 to-orange-600', href: '/crypto' },
+  { id: 'forex', name: 'Forex', subtitle: 'EUR/USD', gradient: 'from-blue-400 to-blue-600', href: '/forex' },
+  { id: 'stock', name: 'Stock', subtitle: 'S&P 500', gradient: 'from-green-400 to-green-600', href: '/stock' },
+]
 
-async function getRankings(): Promise<CategoryRankings> {
-  const { data, error } = await supabase
-    .from('benchmark_runs')
-    .select('category_id, model_id, return_pct, models(display_name)')
-    .eq('status', 'completed')
-    .order('return_pct', { ascending: false })
+async function getTopModels() {
+  const results: Record<string, Array<{ model_id: string; display_name: string; return_pct: number }>> = {}
 
-  if (error || !data) {
-    console.error('Error fetching rankings:', error)
-    return { crypto: [], forex: [], stock: [] }
-  }
+  for (const cat of CATEGORIES) {
+    const { data } = await supabase
+      .from('benchmark_runs')
+      .select('model_id, return_pct, models(display_name)')
+      .eq('category_id', cat.id)
+      .eq('status', 'completed')
+      .order('return_pct', { ascending: false })
+      .limit(3)
 
-  const rankings: CategoryRankings = { crypto: [], forex: [], stock: [] }
-  const categoryCounts = { crypto: 0, forex: 0, stock: 0 }
-
-  for (const row of data) {
-    const category = row.category_id as keyof CategoryRankings
-    if (category in categoryCounts && categoryCounts[category] < 3) {
-      categoryCounts[category]++
+    results[cat.id] = (data || []).map((row) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const modelData = row.models as any
-      const displayName = modelData?.display_name || row.model_id
-      rankings[category].push({
-        rank: categoryCounts[category],
-        model: displayName,
-        returnPct: Number(row.return_pct),
-      })
-    }
+      return {
+        model_id: row.model_id,
+        display_name: modelData?.display_name || row.model_id,
+        return_pct: Number(row.return_pct),
+      }
+    })
   }
 
-  return rankings
+  return results
 }
 
-function RankBadge({ rank }: { rank: number }) {
-  if (rank === 1) return <span className="text-2xl">&#x1F451;</span>
-  if (rank === 2) return <span className="text-xl text-gray-400">&#x1F948;</span>
-  if (rank === 3) return <span className="text-xl text-amber-600">&#x1F949;</span>
-  return <span className="text-gray-500">{rank}</span>
-}
-
-function MarketCard({
-  title,
-  symbol,
-  href,
-  rankings,
-  gradient,
-}: {
-  title: string
-  symbol: string
-  href: string
-  rankings: RankingItem[]
-  gradient: string
-}) {
-  return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-      <div className={gradient + ' px-6 py-4'}>
-        <h2 className="text-xl font-bold text-white">{title}</h2>
-        <p className="text-white/80 text-sm">{symbol}</p>
-      </div>
-      <div className="p-6">
-        <div className="space-y-3">
-          {rankings.length > 0 ? (
-            rankings.map((item) => (
-              <div
-                key={item.rank}
-                className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0"
-              >
-                <div className="flex items-center gap-3">
-                  <RankBadge rank={item.rank} />
-                  <span className="font-medium text-gray-800">{item.model}</span>
-                </div>
-                <span
-                  className={
-                    'font-bold ' +
-                    (item.returnPct >= 0 ? 'text-green-600' : 'text-red-600')
-                  }
-                >
-                  {item.returnPct >= 0 ? '+' : ''}
-                  {item.returnPct.toFixed(1)}%
-                </span>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500 text-center py-4">No data yet</p>
-          )}
-        </div>
-        <div className="mt-6 flex justify-center">
-          <Link
-            href={href}
-            className="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors"
-          >
-            View Details
-          </Link>
-        </div>
-      </div>
-    </div>
-  )
+function RankIcon({ rank }: { rank: number }) {
+  if (rank === 1) return <span className="text-xl">&#x1F451;</span>
+  if (rank === 2) return <span className="text-lg text-gray-400">&#x1F948;</span>
+  if (rank === 3) return <span className="text-lg text-amber-600">&#x1F949;</span>
+  return null
 }
 
 export default async function Home() {
-  const rankings = await getRankings()
+  const topModels = await getTopModels()
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          AI Trading Benchmark
-        </h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">AI Trading Benchmark</h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Compare how different AI models perform in trading decisions across
           cryptocurrency, forex, and stock markets.
@@ -128,34 +62,45 @@ export default async function Home() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
-        <MarketCard
-          title="Cryptocurrency"
-          symbol="BTC/USD"
-          href="/crypto"
-          rankings={rankings.crypto}
-          gradient="bg-gradient-to-r from-orange-400 to-orange-600"
-        />
-        <MarketCard
-          title="Forex"
-          symbol="EUR/USD"
-          href="/forex"
-          rankings={rankings.forex}
-          gradient="bg-gradient-to-r from-blue-400 to-blue-600"
-        />
-        <MarketCard
-          title="Stock"
-          symbol="S&P 500"
-          href="/stock"
-          rankings={rankings.stock}
-          gradient="bg-gradient-to-r from-green-400 to-green-600"
-        />
-      </div>
-
-      <div className="mt-12 text-center">
-        <p className="text-sm text-gray-500">
-          Benchmarks are run with historical data. Past performance does not
-          guarantee future results.
-        </p>
+        {CATEGORIES.map((cat) => (
+          <div key={cat.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <Link href={cat.href} className={'bg-gradient-to-r ' + cat.gradient + ' p-6 block hover:opacity-90 transition-opacity'}>
+              <h2 className="text-2xl font-bold text-white">{cat.name}</h2>
+              <p className="text-white/80">{cat.subtitle}</p>
+            </Link>
+            <div className="p-6">
+              {topModels[cat.id]?.length > 0 ? (
+                <div className="space-y-3">
+                  {topModels[cat.id].map((model, idx) => (
+                    <Link
+                      key={model.model_id}
+                      href={'/' + cat.id + '/' + model.model_id}
+                      className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <RankIcon rank={idx + 1} />
+                        <span className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                          {model.display_name}
+                        </span>
+                      </div>
+                      <span className={model.return_pct >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                        {model.return_pct >= 0 ? '+' : ''}{model.return_pct.toFixed(1)}%
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-400 text-center py-4">No data yet</p>
+              )}
+              <Link
+                href={cat.href}
+                className="mt-4 block text-center py-2 px-4 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-colors"
+              >
+                View Details
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

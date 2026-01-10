@@ -42,9 +42,9 @@ MODEL_CONFIGS = {
 }
 
 CATEGORY_ASSETS = {
-    'crypto': {'symbol': 'BTC-USD', 'name': 'Bitcoin'},
-    'forex': {'symbol': 'EURUSD=X', 'name': 'EUR/USD'},
-    'stock': {'symbol': '^GSPC', 'name': 'S&P 500'},
+    'crypto': {'symbol': 'BTC-USD', 'name': 'Bitcoin', 'asset_id': 'BTCUSD'},
+    'forex': {'symbol': 'EURUSD=X', 'name': 'EUR/USD', 'asset_id': 'EURUSD'},
+    'stock': {'symbol': '^GSPC', 'name': 'S&P 500', 'asset_id': 'SPX'},
 }
 
 def get_price_data(symbol, days=30):
@@ -68,7 +68,7 @@ def get_price_data(symbol, days=30):
 def call_ai(model_id, prompt):
     config = MODEL_CONFIGS.get(model_id)
     if not config:
-        raise ValueError(f"Unknown model: {model_id}")
+        raise ValueError("Unknown model: {}".format(model_id))
     provider = config['provider']
     model = config['model']
     
@@ -76,9 +76,9 @@ def call_ai(model_id, prompt):
         api_key = os.getenv('OPENAI_API_KEY')
         response = requests.post(
             AI_ENDPOINTS['openai'],
-            headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {api_key}'},
+            headers={'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(api_key)},
             json={'model': model, 'messages': [{'role': 'user', 'content': prompt}], 'temperature': 0.3, 'max_tokens': 500},
-            timeout=60
+            timeout=120
         )
         data = response.json()
         return data.get('choices', [{}])[0].get('message', {}).get('content', '')
@@ -89,16 +89,16 @@ def call_ai(model_id, prompt):
             AI_ENDPOINTS['anthropic'],
             headers={'Content-Type': 'application/json', 'x-api-key': api_key, 'anthropic-version': '2023-06-01'},
             json={'model': model, 'max_tokens': 500, 'messages': [{'role': 'user', 'content': prompt}]},
-            timeout=60
+            timeout=120
         )
         data = response.json()
         return data.get('content', [{}])[0].get('text', '')
     
     elif provider == 'google':
         api_key = os.getenv('GOOGLE_API_KEY')
-        url = AI_ENDPOINTS['google'].format(model=model) + f'?key={api_key}'
+        url = AI_ENDPOINTS['google'].format(model=model) + '?key={}'.format(api_key)
         response = requests.post(url, headers={'Content-Type': 'application/json'},
-            json={'contents': [{'parts': [{'text': prompt}]}]}, timeout=60)
+            json={'contents': [{'parts': [{'text': prompt}]}]}, timeout=120)
         data = response.json()
         return data.get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '')
     
@@ -106,9 +106,9 @@ def call_ai(model_id, prompt):
         api_key = os.getenv('XAI_API_KEY')
         response = requests.post(
             AI_ENDPOINTS['xai'],
-            headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {api_key}'},
+            headers={'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(api_key)},
             json={'model': model, 'messages': [{'role': 'user', 'content': prompt}], 'temperature': 0.3, 'max_tokens': 500},
-            timeout=60
+            timeout=120
         )
         data = response.json()
         return data.get('choices', [{}])[0].get('message', {}).get('content', '')
@@ -143,7 +143,7 @@ def build_prompt(day, total_days, cash, position, current_price, price_history, 
     total_value = cash + position_value
     max_buy = cash / current_price if current_price > 0 else 0
     
-    prompt = """You are a trading AI. Make a decision for {}.
+    prompt = """You are an AGGRESSIVE trading AI. Make a decision for {}.
 
 DAY {}/{}
 Current Price: {:.2f}
@@ -154,16 +154,23 @@ Total Portfolio: {:.2f}
 Recent Prices:
 {}
 
+STRATEGY - BE AGGRESSIVE:
+- Trade actively! Don't just hold - look for opportunities
+- Buy when you see potential upside (price dips, momentum building)
+- Sell to take profits or cut losses - don't wait too long
+- Use 30-70% of available cash/position per trade
+- Goal: Maximize returns through active trading by day {}
+
 RULES:
-- buy/sell/hold
-- When buying, max units: {:.6f}
-- When selling, max units: {:.6f}
-- Goal: Maximize portfolio by day {}
+- buy/sell/hold (prefer buy or sell over hold!)
+- When buying, suggested range: {:.6f} to {:.6f} units
+- When selling, suggested range: {:.6f} to {:.6f} units
+- Make decisive moves based on price action
 
 Respond ONLY with JSON:
 {{"action": "buy"|"sell"|"hold", "quantity": number, "reasoning": "brief"}}""".format(
         asset_name, day, total_days, current_price, cash, position, position_value,
-        total_value, price_str, max_buy, position, total_days
+        total_value, price_str, total_days, max_buy * 0.3, max_buy * 0.7, position * 0.3, position * 0.7
     )
     return prompt
 
@@ -174,7 +181,7 @@ def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None
     
     asset = CATEGORY_ASSETS.get(category)
     if not asset:
-        raise ValueError(f"Unknown category: {category}")
+        raise ValueError("Unknown category: {}".format(category))
     
     print("")
     print("=" * 60)
@@ -196,9 +203,12 @@ def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None
     cash = initial_balance
     position = 0.0
     trades = []
+    daily_data = []
     
     for day, price_data in enumerate(prices, 1):
         current_price = price_data['close']
+        day_start_value = cash + position * current_price
+        
         prompt = build_prompt(day, days, cash, position, current_price, prices[:day], asset['name'])
         
         try:
@@ -206,10 +216,11 @@ def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None
             decision = parse_decision(response)
         except Exception as e:
             print("  Day {}: AI error - {}".format(day, e))
-            decision = {'action': 'hold', 'quantity': 0}
+            decision = {'action': 'hold', 'quantity': 0, 'reasoning': str(e)}
         
         action = decision['action']
         quantity = decision['quantity']
+        trade_pnl = 0
         
         if action == 'buy' and quantity > 0:
             max_qty = cash / current_price
@@ -218,24 +229,69 @@ def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None
                 cost = qty * current_price
                 cash -= cost
                 position += qty
-                trades.append({'day': day, 'action': 'buy', 'qty': qty, 'price': current_price})
+                trades.append({
+                    'day': day,
+                    'date': price_data['date'],
+                    'action': 'buy',
+                    'quantity': qty,
+                    'price': current_price,
+                    'cost': cost,
+                    'balance_after': cash + position * current_price,
+                    'reasoning': decision.get('reasoning', '')
+                })
                 print("  Day {}: BUY {:.6f} @ {:.2f} = {:.2f}".format(day, qty, current_price, cost))
+        
         elif action == 'sell' and quantity > 0:
             qty = min(quantity, position)
             if qty > 0.0001:
                 revenue = qty * current_price
+                # Calculate P&L for this sell
+                avg_buy_price = 0
+                if len([t for t in trades if t['action'] == 'buy']) > 0:
+                    total_bought = sum(t['cost'] for t in trades if t['action'] == 'buy')
+                    total_qty = sum(t['quantity'] for t in trades if t['action'] == 'buy')
+                    if total_qty > 0:
+                        avg_buy_price = total_bought / total_qty
+                trade_pnl = (current_price - avg_buy_price) * qty if avg_buy_price > 0 else 0
+                
                 cash += revenue
                 position -= qty
-                trades.append({'day': day, 'action': 'sell', 'qty': qty, 'price': current_price})
-                print("  Day {}: SELL {:.6f} @ {:.2f} = {:.2f}".format(day, qty, current_price, revenue))
+                trades.append({
+                    'day': day,
+                    'date': price_data['date'],
+                    'action': 'sell',
+                    'quantity': qty,
+                    'price': current_price,
+                    'revenue': revenue,
+                    'pnl': trade_pnl,
+                    'balance_after': cash + position * current_price,
+                    'reasoning': decision.get('reasoning', '')
+                })
+                print("  Day {}: SELL {:.6f} @ {:.2f} = {:.2f} (PnL: {:.2f})".format(day, qty, current_price, revenue, trade_pnl))
+        
         else:
             print("  Day {}: HOLD (Price: {:.2f})".format(day, current_price))
+        
+        day_end_value = cash + position * current_price
+        daily_pnl = day_end_value - day_start_value
+        
+        daily_data.append({
+            'day': day,
+            'date': price_data['date'],
+            'price': current_price,
+            'cash': cash,
+            'position': position,
+            'portfolio_value': day_end_value,
+            'daily_pnl': daily_pnl,
+            'action': action if action != 'hold' else None,
+            'trade_pnl': trade_pnl if action == 'sell' else None,
+        })
     
     final_price = prices[-1]['close']
     final_position_value = position * final_price
     final_balance = cash + final_position_value
     return_pct = ((final_balance - initial_balance) / initial_balance) * 100
-    winning_trades = len([t for t in trades if t['action'] == 'sell'])
+    winning_trades = len([t for t in trades if t['action'] == 'sell' and t.get('pnl', 0) > 0])
     
     print("")
     print("=" * 60)
@@ -249,30 +305,74 @@ def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None
     print("")
     
     return {
-        'model_id': model_id, 'category': category, 'seed': seed,
-        'initial_balance': initial_balance, 'final_balance': final_balance,
-        'return_pct': return_pct, 'total_trades': len(trades), 'winning_trades': winning_trades,
+        'model_id': model_id,
+        'category': category,
+        'asset_id': asset['asset_id'],
+        'seed': seed,
+        'initial_balance': initial_balance,
+        'final_balance': final_balance,
+        'return_pct': return_pct,
+        'total_trades': len(trades),
+        'winning_trades': winning_trades,
+        'trades': trades,
+        'daily_data': daily_data,
     }
 
 def save_to_supabase(result):
     if not SUPABASE_URL or not SUPABASE_KEY:
         print("Supabase credentials not found")
         return
-    url = "{}/rest/v1/benchmark_runs".format(SUPABASE_URL)
+    
     headers = {
-        'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json', 'Prefer': 'return=representation',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation',
     }
-    data = {
-        'model_id': result['model_id'], 'category_id': result['category'],
-        'seed': result['seed'], 'initial_balance': result['initial_balance'],
-        'final_balance': result['final_balance'], 'return_pct': result['return_pct'],
-        'total_trades': result['total_trades'], 'winning_trades': result['winning_trades'],
-        'status': 'completed', 'finished_at': datetime.now().isoformat(),
+    
+    # Save benchmark run
+    run_data = {
+        'model_id': result['model_id'],
+        'category_id': result['category'],
+        'seed': result['seed'],
+        'initial_balance': result['initial_balance'],
+        'final_balance': result['final_balance'],
+        'return_pct': result['return_pct'],
+        'total_trades': result['total_trades'],
+        'winning_trades': result['winning_trades'],
+        'status': 'completed',
+        'finished_at': datetime.now().isoformat(),
     }
-    response = requests.post(url, headers=headers, json=data)
+    
+    url = "{}/rest/v1/benchmark_runs".format(SUPABASE_URL)
+    response = requests.post(url, headers=headers, json=run_data)
+    
     if response.status_code == 201:
-        print("Result saved to Supabase!")
+        run_id = response.json()[0]['id']
+        print("Benchmark run saved! ID: {}".format(run_id))
+        
+        # Save daily data as JSON in a new column or separate table
+        # For now, save trades to trades table
+        if result['trades']:
+            for trade in result['trades']:
+                trade_data = {
+                    'run_id': run_id,
+                    'asset_id': result['asset_id'],
+                    'timestamp': trade['date'] + 'T00:00:00Z',
+                    'action': trade['action'],
+                    'quantity': trade['quantity'],
+                    'price': trade['price'],
+                    'balance_after': trade['balance_after'],
+                    'reasoning': trade.get('reasoning', ''),
+                }
+                trade_url = "{}/rest/v1/trades".format(SUPABASE_URL)
+                requests.post(trade_url, headers=headers, json=trade_data)
+        
+        # Save daily_data to benchmark_runs as JSON
+        daily_url = "{}/rest/v1/benchmark_runs?id=eq.{}".format(SUPABASE_URL, run_id)
+        requests.patch(daily_url, headers=headers, json={'daily_data': json.dumps(result['daily_data'])})
+        
+        print("Trades and daily data saved!")
     else:
         print("Failed to save: {} - {}".format(response.status_code, response.text))
 
