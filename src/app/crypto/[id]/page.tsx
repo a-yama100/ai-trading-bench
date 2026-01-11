@@ -27,7 +27,7 @@ export default async function CryptoModelDetailPage({ params }: Props) {
   const { id } = await params
 
   const { data: model } = await supabase
-    .from('models')
+    .from('shared_models')
     .select('*')
     .eq('id', id)
     .single()
@@ -37,7 +37,7 @@ export default async function CryptoModelDetailPage({ params }: Props) {
   }
 
   const { data: runs } = await supabase
-    .from('benchmark_runs')
+    .from('tb_benchmark_runs')
     .select('*')
     .eq('model_id', id)
     .eq('category_id', 'crypto')

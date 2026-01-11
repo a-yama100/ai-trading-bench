@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 async function getStockRankings() {
   const { data, error } = await supabase
-    .from('benchmark_runs')
+    .from('tb_benchmark_runs')
     .select('id, model_id, return_pct, total_trades, winning_trades, initial_balance, final_balance, finished_at, models(display_name, provider)')
     .eq('category_id', 'stock')
     .eq('status', 'completed')

@@ -11,7 +11,7 @@ interface Model {
 
 async function getModels(): Promise<Model[]> {
   const { data, error } = await supabase
-    .from('models')
+    .from('shared_models')
     .select('*')
     .eq('is_active', true)
     .order('provider', { ascending: true })
@@ -26,7 +26,7 @@ async function getModels(): Promise<Model[]> {
 
 async function getModelStats() {
   const { data, error } = await supabase
-    .from('benchmark_runs')
+    .from('tb_benchmark_runs')
     .select('model_id, return_pct, category_id')
     .eq('status', 'completed')
 

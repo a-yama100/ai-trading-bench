@@ -20,7 +20,7 @@ async function getTopModels() {
 
   for (const cat of CATEGORIES) {
     const { data } = await supabase
-      .from('benchmark_runs')
+      .from('tb_benchmark_runs')
       .select('model_id, return_pct, models(display_name)')
       .eq('category_id', cat.id)
       .eq('status', 'completed')
