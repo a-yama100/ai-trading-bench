@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'AI Trading Benchmark',
   description: 'Compare AI models in trading decisions across Crypto, Forex, and Stock markets',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({

@@ -37,7 +37,7 @@ export function Navbar() {
             <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
               <span className="text-white font-bold text-sm">TB</span>
             </div>
-            <span className="font-bold text-lg text-gray-800 group-hover:text-blue-600 transition-colors hidden sm:inline">
+            <span className="font-bold text-lg text-gray-800 group-hover:text-blue-600 transition-colors inline text-sm sm:text-lg">
               AI Trading Bench
             </span>
           </Link>
