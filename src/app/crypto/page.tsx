@@ -94,7 +94,7 @@ export default async function CryptoPage() {
             <tbody className="divide-y divide-gray-200">
               {rankings.map((run, index) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const modelData = run.models as any
+                const modelData = run.shared_models as any
                 const winRate = run.total_trades > 0 
                   ? ((run.winning_trades / run.total_trades) * 100).toFixed(1)
                   : '0.0'

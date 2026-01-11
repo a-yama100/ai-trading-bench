@@ -19,7 +19,7 @@ interface RunData {
   initial_balance: number
   final_balance: number
   finished_at: string
-  daily_data?: string
+  daily_data?: string | DailyDataPoint[]
 }
 
 interface TradeChartProps {
@@ -54,7 +54,11 @@ export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
   
   if (latestRun && latestRun.daily_data) {
     try {
-      dailyData = JSON.parse(latestRun.daily_data)
+      if (typeof latestRun.daily_data === 'string') {
+        dailyData = JSON.parse(latestRun.daily_data)
+      } else {
+        dailyData = latestRun.daily_data as DailyDataPoint[]
+      }
     } catch (e) {
       console.error('Failed to parse daily_data:', e)
     }
