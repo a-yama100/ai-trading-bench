@@ -9,7 +9,7 @@ interface Model {
   is_active: boolean
 }
 
-async function getshared_models(): Promise<Model[]> {
+async function getModels(): Promise<Model[]> {
   const { data, error } = await supabase
     .from('shared_models')
     .select('*')
@@ -74,7 +74,7 @@ function getProviderName(provider: string) {
 }
 
 export default async function ModelsPage() {
-  const models = await getshared_models()
+  const models = await getModels()
   const stats = await getModelStats()
 
   const groupedModels: Record<string, Model[]> = {}
