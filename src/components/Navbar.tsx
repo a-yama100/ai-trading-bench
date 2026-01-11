@@ -1,5 +1,4 @@
-﻿'use client'
-
+'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
@@ -41,15 +40,14 @@ export function Navbar() {
               AI Trading Bench
             </span>
           </Link>
-
           <div className="hidden md:flex items-center space-x-2">
             <Link href="/" className={linkClass('/')}>Home</Link>
             <Link href="/crypto" className={linkClass('/crypto')}>Crypto</Link>
             <Link href="/forex" className={linkClass('/forex')}>Forex</Link>
             <Link href="/stock" className={linkClass('/stock')}>Stock</Link>
             <Link href="/models" className={linkClass('/models')}>Models</Link>
+            <Link href="/faq" className={linkClass('/faq')}>FAQ</Link>
           </div>
-
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
@@ -64,7 +62,6 @@ export function Navbar() {
           </button>
         </div>
       </div>
-
       {isOpen && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <Link href="/" className={mobileLinkClass('/')} onClick={() => setIsOpen(false)}>Home</Link>
@@ -72,6 +69,7 @@ export function Navbar() {
           <Link href="/forex" className={mobileLinkClass('/forex')} onClick={() => setIsOpen(false)}>Forex</Link>
           <Link href="/stock" className={mobileLinkClass('/stock')} onClick={() => setIsOpen(false)}>Stock</Link>
           <Link href="/models" className={mobileLinkClass('/models')} onClick={() => setIsOpen(false)}>Models</Link>
+          <Link href="/faq" className={mobileLinkClass('/faq')} onClick={() => setIsOpen(false)}>FAQ</Link>
         </div>
       )}
     </nav>
