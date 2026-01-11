@@ -56,6 +56,28 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'AI Trading Benchmark',
+  description: 'Compare AI trading performance across GPT-4, Claude, Gemini, and DeepSeek models in crypto, forex, and stock markets.',
+  url: 'https://trading.phapp.one/',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  featureList: [
+    'AI model comparison',
+    'Crypto trading benchmarks',
+    'Forex trading benchmarks',
+    'Stock market benchmarks',
+    'Real-time performance tracking',
+  ],
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -63,6 +85,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={geistSans.variable + ' ' + geistMono.variable + ' antialiased min-h-screen flex flex-col'}>
         <Navbar />
         <main className="flex-1">
