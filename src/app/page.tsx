@@ -18,24 +18,31 @@ const CATEGORIES: CategoryData[] = [
 async function getTopModels() {
   const results: Record<string, Array<{ model_id: string; display_name: string; return_pct: number }>> = {}
 
+  // まずモデル一覧を取得
+  const { data: models, error: modelsError } = await supabase
+    .from('shared_models')
+    .select('id, display_name')
+  
+  console.log('Models:', models, 'Error:', modelsError)
+  
+  const modelMap = new Map(models?.map(m => [m.id, m.display_name]) || [])
+
   for (const cat of CATEGORIES) {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('tb_benchmark_runs')
-      .select('model_id, return_pct, models(display_name)')
+      .select('model_id, return_pct')
       .eq('category_id', cat.id)
       .eq('status', 'completed')
       .order('return_pct', { ascending: false })
       .limit(3)
 
-    results[cat.id] = (data || []).map((row) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const modelData = row.models as any
-      return {
-        model_id: row.model_id,
-        display_name: modelData?.display_name || row.model_id,
-        return_pct: Number(row.return_pct),
-      }
-    })
+    console.log(`Category ${cat.id}:`, data, 'Error:', error)
+
+    results[cat.id] = (data || []).map((row) => ({
+      model_id: row.model_id,
+      display_name: modelMap.get(row.model_id) || row.model_id,
+      return_pct: Number(row.return_pct),
+    }))
   }
 
   return results
