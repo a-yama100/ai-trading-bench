@@ -31,7 +31,7 @@ MODEL_CONFIGS = {
     'gpt-4.1-mini': {'provider': 'openai', 'model': 'gpt-4.1-mini'},
     'claude-opus-4': {'provider': 'anthropic', 'model': 'claude-opus-4-20250514'},
     'claude-sonnet-4': {'provider': 'anthropic', 'model': 'claude-sonnet-4-20250514'},
-    'claude-haiku-3.5': {'provider': 'anthropic', 'model': 'claude-3-5-haiku-20241022'},
+    'claude-haiku-3.5': {'provider': 'anthropic', 'model': 'claude-3-haiku-20240307'},
     'gemini-2.5-pro': {'provider': 'google', 'model': 'gemini-2.5-pro'},
     'gemini-2.5-flash': {'provider': 'google', 'model': 'gemini-2.5-flash'},
     'gemini-2.0-flash': {'provider': 'google', 'model': 'gemini-2.0-flash'},
@@ -116,13 +116,20 @@ def call_ai(model_id, prompt):
 
 def parse_decision(response):
     try:
-        json_str = response
-        if '`' in response:
+        json_str = response.strip()
+        # Remove markdown code blocks (```json ... ```)
+        if '```' in json_str:
             import re
-            match = re.search(r'`(?:json)?\s*([\s\S]*?)`', response)
+            match = re.search(r'```(?:json)?\s*([\s\S]*?)```', json_str)
             if match:
-                json_str = match.group(1)
-        decision = json.loads(json_str.strip())
+                json_str = match.group(1).strip()
+        # Try to find JSON object in response
+        if not json_str.startswith('{'):
+            import re
+            match = re.search(r'\{[^{}]*\}', json_str)
+            if match:
+                json_str = match.group(0)
+        decision = json.loads(json_str)
         action = decision.get('action', 'hold').lower()
         if action not in ['buy', 'sell', 'hold']:
             action = 'hold'
@@ -130,8 +137,9 @@ def parse_decision(response):
         if quantity < 0:
             quantity = 0
         return {'action': action, 'quantity': quantity, 'reasoning': decision.get('reasoning', '')}
-    except:
-        return {'action': 'hold', 'quantity': 0, 'reasoning': 'Failed to parse'}
+    except Exception as e:
+        print("    Parse error: {} | Response: {}".format(e, response[:100]))
+        return {'action': 'hold', 'quantity': 0, 'reasoning': 'Failed to parse: ' + str(e)}
 
 def build_prompt(day, total_days, cash, position, current_price, price_history, asset_name):
     recent_prices = price_history[-5:] if len(price_history) >= 5 else price_history
@@ -402,4 +410,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
