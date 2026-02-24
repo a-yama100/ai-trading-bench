@@ -1,4 +1,4 @@
 ﻿User-agent: *
 Allow: /
 
-Sitemap: https://trading.phapp.one/sitemap.xml
+Sitemap: https://trading.phtechai.com/sitemap.xml

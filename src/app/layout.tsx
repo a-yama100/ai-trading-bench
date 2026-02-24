@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://trading.phtechsolutions.com/',
+    url: 'https://trading.phtechai.com/',
     siteName: 'AI Trading Benchmark',
     title: 'AI Trading Benchmark - Compare AI Models in Trading Decisions',
     description: 'Compare AI trading performance across GPT-4, Claude, Gemini, and DeepSeek models. Analyze crypto, forex, and stock market decisions with real-time benchmarks.',
@@ -61,7 +61,7 @@ const jsonLd = {
   '@type': 'WebApplication',
   name: 'AI Trading Benchmark',
   description: 'Compare AI trading performance across GPT-4, Claude, Gemini, and DeepSeek models in crypto, forex, and stock markets.',
-  url: 'https://trading.phtechsolutions.com/',
+  url: 'https://trading.phtechai.com/',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Web',
   offers: {
