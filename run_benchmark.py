@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 AI Trading Benchmark Runner
 """
@@ -344,7 +344,7 @@ def save_to_supabase(result):
         'finished_at': datetime.now().isoformat(),
     }
     
-    url = "{}/rest/v1/benchmark_runs".format(SUPABASE_URL)
+    url = "{}/rest/v1/tb_benchmark_runs".format(SUPABASE_URL)
     response = requests.post(url, headers=headers, json=run_data)
     
     if response.status_code == 201:
@@ -365,11 +365,11 @@ def save_to_supabase(result):
                     'balance_after': trade['balance_after'],
                     'reasoning': trade.get('reasoning', ''),
                 }
-                trade_url = "{}/rest/v1/trades".format(SUPABASE_URL)
+                trade_url = "{}/rest/v1/tb_trades".format(SUPABASE_URL)
                 requests.post(trade_url, headers=headers, json=trade_data)
         
         # Save daily_data to benchmark_runs as JSON
-        daily_url = "{}/rest/v1/benchmark_runs?id=eq.{}".format(SUPABASE_URL, run_id)
+        daily_url = "{}/rest/v1/tb_benchmark_runs?id=eq.{}".format(SUPABASE_URL, run_id)
         requests.patch(daily_url, headers=headers, json={'daily_data': json.dumps(result['daily_data'])})
         
         print("Trades and daily data saved!")
@@ -402,3 +402,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
