@@ -39,6 +39,15 @@ MODEL_CONFIGS = {
     'grok-3-mini': {'provider': 'xai', 'model': 'grok-3-mini'},
     'grok-4-fast': {'provider': 'xai', 'model': 'grok-4-fast-non-reasoning'},
     'grok-4-1-fast': {'provider': 'xai', 'model': 'grok-4-1-fast-non-reasoning'},
+    # Ollama models
+    'phi3-mini': {'provider': 'ollama', 'model': 'phi3:mini'},
+    'llama3.2-3b': {'provider': 'ollama', 'model': 'llama3.2:3b'},
+    'gemma2-2b': {'provider': 'ollama', 'model': 'gemma2:2b'},
+    'codellama-7b': {'provider': 'ollama', 'model': 'codellama:7b'},
+    'deepseek-r1-7b': {'provider': 'ollama', 'model': 'deepseek-r1:7b'},
+    'deepseek-r1-8b': {'provider': 'ollama', 'model': 'deepseek-r1:8b'},
+    'qwen2.5-coder-7b': {'provider': 'ollama', 'model': 'qwen2.5-coder:7b'},
+    'lfm2.5-thinking': {'provider': 'ollama', 'model': 'lfm2.5-thinking:latest'},
 }
 
 CATEGORY_ASSETS = {
@@ -112,6 +121,18 @@ def call_ai(model_id, prompt):
         )
         data = response.json()
         return data.get('choices', [{}])[0].get('message', {}).get('content', '')
+    elif provider == 'ollama':
+        try:
+            response = requests.post(
+                'http://localhost:11434/api/chat',
+                json={'model': model, 'messages': [{'role': 'user', 'content': prompt}], 'stream': False, 'options': {'temperature': 0.3}},
+                timeout=300
+            )
+            data = response.json()
+            return data.get('message', {}).get('content', '')
+        except Exception as e:
+            print("    Ollama error: {}".format(e))
+            return ''
     return ''
 
 def parse_decision(response):
@@ -404,9 +425,46 @@ def main():
     if not args.model:
         parser.error("Required: -m/--model")
     
-    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed)
-    if args.save:
+    try:
+        result = run_simulation(args.model, args.category, args.days, args.balance, args.seed)
+        result['status'] = 'completed'
+    except Exception as e:
+        print("")
+        print("!" * 60)
+        print("BENCHMARK FAILED: {}".format(e))
+        print("!" * 60)
+        import traceback
+        tb = traceback.format_exc()
+        print(tb)
+        result = {
+            'model_id': args.model,
+            'category': args.category,
+            'status': 'failed',
+            'error': str(e),
+            'traceback': tb,
+            'seed': args.seed,
+            'initial_balance': args.balance,
+            'final_balance': 0,
+            'return_pct': 0,
+            'total_trades': 0,
+            'winning_trades': 0,
+            'trades': [],
+            'daily_data': [],
+        }
+    # Always save locally
+    results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results')
+    os.makedirs(results_dir, exist_ok=True)
+    from datetime import datetime as dt
+    fname = "{}_{}_{}.json".format(args.model, args.category, dt.now().strftime('%Y%m%d_%H%M%S'))
+    local_path = os.path.join(results_dir, fname)
+    with open(local_path, 'w', encoding='utf-8') as f:
+        json.dump(result, f, indent=2, ensure_ascii=False, default=str)
+    print("Result saved locally: {}".format(local_path))
+
+    if args.save and result.get('status') == 'completed':
         save_to_supabase(result)
+    elif args.save and result.get('status') == 'failed':
+        print("Skipping Supabase save due to failure. Error saved locally.")
 
 if __name__ == '__main__':
     main()

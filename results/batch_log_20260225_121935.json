@@ -1,0 +1,140 @@
+[
+  {
+    "model": "gemma2-2b",
+    "category": "forex",
+    "status": "completed",
+    "elapsed": 444.7
+  },
+  {
+    "model": "gemma2-2b",
+    "category": "stock",
+    "status": "completed",
+    "elapsed": 379.6
+  },
+  {
+    "model": "phi3-mini",
+    "category": "crypto",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "phi3-mini",
+    "category": "forex",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "phi3-mini",
+    "category": "stock",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "llama3.2-3b",
+    "category": "crypto",
+    "status": "completed",
+    "elapsed": 481.8
+  },
+  {
+    "model": "llama3.2-3b",
+    "category": "forex",
+    "status": "completed",
+    "elapsed": 457.4
+  },
+  {
+    "model": "llama3.2-3b",
+    "category": "stock",
+    "status": "completed",
+    "elapsed": 398.4
+  },
+  {
+    "model": "codellama-7b",
+    "category": "crypto",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "codellama-7b",
+    "category": "forex",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "codellama-7b",
+    "category": "stock",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "deepseek-r1-7b",
+    "category": "crypto",
+    "status": "timeout",
+    "elapsed": 870.8
+  },
+  {
+    "model": "deepseek-r1-7b",
+    "category": "forex",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "deepseek-r1-7b",
+    "category": "stock",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "deepseek-r1-8b",
+    "category": "crypto",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "deepseek-r1-8b",
+    "category": "forex",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "deepseek-r1-8b",
+    "category": "stock",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "qwen2.5-coder-7b",
+    "category": "crypto",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "qwen2.5-coder-7b",
+    "category": "forex",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "qwen2.5-coder-7b",
+    "category": "stock",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "lfm2.5-thinking",
+    "category": "crypto",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "lfm2.5-thinking",
+    "category": "forex",
+    "status": "timeout",
+    "elapsed": 600.0
+  },
+  {
+    "model": "lfm2.5-thinking",
+    "category": "stock",
+    "status": "timeout",
+    "elapsed": 600.0
+  }
+]

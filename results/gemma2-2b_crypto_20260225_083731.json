@@ -1,0 +1,121 @@
+{
+  "model_id": "gemma2-2b",
+  "category": "crypto",
+  "asset_id": "BTCUSD",
+  "seed": 92129,
+  "initial_balance": 10000,
+  "final_balance": 9498.864328781248,
+  "return_pct": -5.011356712187517,
+  "total_trades": 5,
+  "winning_trades": 0,
+  "trades": [
+    {
+      "day": 1,
+      "date": "2026-02-20",
+      "action": "buy",
+      "quantity": 0.075,
+      "price": 68005.421875,
+      "cost": 5100.406640624999,
+      "balance_after": 10000.0,
+      "reasoning": "Price is showing strong upward momentum and potential for further gains within the suggested range."
+    },
+    {
+      "day": 2,
+      "date": "2026-02-21",
+      "action": "buy",
+      "quantity": 0.04,
+      "price": 68003.765625,
+      "cost": 2720.150625,
+      "balance_after": 9999.87578125,
+      "reasoning": "Price is dipping slightly after a strong uptick. Potential for further growth within the suggested range."
+    },
+    {
+      "day": 3,
+      "date": "2026-02-22",
+      "action": "buy",
+      "quantity": 0.015,
+      "price": 67659.390625,
+      "cost": 1014.890859375,
+      "balance_after": 9960.272656250001,
+      "reasoning": "Price dipped below the previous range and showing potential for upward momentum."
+    },
+    {
+      "day": 4,
+      "date": "2026-02-23",
+      "action": "buy",
+      "quantity": 0.012616,
+      "price": 64616.73828125,
+      "cost": 815.20477015625,
+      "balance_after": 9564.727851562498,
+      "reasoning": "Price has dipped significantly and momentum is building.  Taking advantage of this dip to buy a significant portion of available cash."
+    },
+    {
+      "day": 5,
+      "date": "2026-02-24",
+      "action": "buy",
+      "quantity": 0.002634,
+      "price": 64154.9140625,
+      "cost": 168.984043640625,
+      "balance_after": 9498.864328781248,
+      "reasoning": "Price dipped below the recent range and momentum is building towards a potential upward trend."
+    }
+  ],
+  "daily_data": [
+    {
+      "day": 1,
+      "date": "2026-02-20",
+      "price": 68005.421875,
+      "cash": 4899.593359375001,
+      "position": 0.075,
+      "portfolio_value": 10000.0,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 2,
+      "date": "2026-02-21",
+      "price": 68003.765625,
+      "cash": 2179.4427343750003,
+      "position": 0.11499999999999999,
+      "portfolio_value": 9999.87578125,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 3,
+      "date": "2026-02-22",
+      "price": 67659.390625,
+      "cash": 1164.5518750000003,
+      "position": 0.13,
+      "portfolio_value": 9960.272656250001,
+      "daily_pnl": 1.8189894035458565e-12,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 4,
+      "date": "2026-02-23",
+      "price": 64616.73828125,
+      "cash": 349.34710484375034,
+      "position": 0.142616,
+      "portfolio_value": 9564.727851562498,
+      "daily_pnl": -3.637978807091713e-12,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 5,
+      "date": "2026-02-24",
+      "price": 64154.9140625,
+      "cash": 180.36306120312534,
+      "position": 0.14525,
+      "portfolio_value": 9498.864328781248,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    }
+  ],
+  "status": "completed"
+}

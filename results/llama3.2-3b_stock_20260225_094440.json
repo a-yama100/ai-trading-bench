@@ -1,0 +1,463 @@
+{
+  "model_id": "llama3.2-3b",
+  "category": "stock",
+  "asset_id": "SPX",
+  "seed": 53620,
+  "initial_balance": 10000,
+  "final_balance": 9915.508686146579,
+  "return_pct": -0.8449131385342116,
+  "total_trades": 16,
+  "winning_trades": 1,
+  "trades": [
+    {
+      "day": 1,
+      "date": "2026-01-16",
+      "action": "buy",
+      "quantity": 0.005,
+      "price": 6940.009765625,
+      "cost": 34.700048828125,
+      "balance_after": 10000.0,
+      "reasoning": "Price is near support (6940.01) and has been consolidating for a few days. Potential reversal setup."
+    },
+    {
+      "day": 2,
+      "date": "2026-01-20",
+      "action": "buy",
+      "quantity": 0.015,
+      "price": 6796.85986328125,
+      "cost": 101.95289794921875,
+      "balance_after": 9999.284250488281,
+      "reasoning": "Price dipped to 6796.86, potential for upside momentum building"
+    },
+    {
+      "day": 3,
+      "date": "2026-01-21",
+      "action": "buy",
+      "quantity": 0.03,
+      "price": 6875.6201171875,
+      "cost": 206.268603515625,
+      "balance_after": 10000.859455566406,
+      "reasoning": "Price is near the lower bound of suggested range (0.430362) and momentum is building up after a significant drop on January 20th."
+    },
+    {
+      "day": 4,
+      "date": "2026-01-22",
+      "action": "buy",
+      "quantity": 0.05,
+      "price": 6913.35009765625,
+      "cost": 345.6675048828125,
+      "balance_after": 10002.745954589844,
+      "reasoning": "Price is near lower high and momentum is building"
+    },
+    {
+      "day": 5,
+      "date": "2026-01-23",
+      "action": "buy",
+      "quantity": 0.05,
+      "price": 6915.60986328125,
+      "cost": 345.78049316406253,
+      "balance_after": 10002.971931152344,
+      "reasoning": "Price is at the lower end of its recent range and showing signs of a potential bounce."
+    },
+    {
+      "day": 6,
+      "date": "2026-01-26",
+      "action": "buy",
+      "quantity": 0.15,
+      "price": 6950.22998046875,
+      "cost": 1042.5344970703125,
+      "balance_after": 10008.164948730468,
+      "reasoning": "Price is near the lower bound of suggested range and momentum is building"
+    },
+    {
+      "day": 7,
+      "date": "2026-01-27",
+      "action": "buy",
+      "quantity": 0.3,
+      "price": 6978.60009765625,
+      "cost": 2093.5800292968747,
+      "balance_after": 10016.675983886718,
+      "reasoning": "Price is at a support level and showing signs of momentum building"
+    },
+    {
+      "day": 8,
+      "date": "2026-01-28",
+      "action": "buy",
+      "quantity": 0.5,
+      "price": 6978.02978515625,
+      "cost": 3489.014892578125,
+      "balance_after": 10016.33379638672,
+      "reasoning": "Price is dipping below the recent high and momentum is building."
+    },
+    {
+      "day": 9,
+      "date": "2026-01-29",
+      "action": "buy",
+      "quantity": 0.100753,
+      "price": 6969.009765625,
+      "cost": 702.1486409160156,
+      "balance_after": 10006.411774902344,
+      "reasoning": "Price dipped below support at 6923.23 and momentum is building"
+    },
+    {
+      "day": 10,
+      "date": "2026-01-30",
+      "action": "buy",
+      "quantity": 0.1,
+      "price": 6939.02978515625,
+      "cost": 693.902978515625,
+      "balance_after": 9970.413223414553,
+      "reasoning": "Price at 6939.03 is near the low of the day and momentum is building"
+    },
+    {
+      "day": 11,
+      "date": "2026-02-02",
+      "action": "buy",
+      "quantity": 0.040613,
+      "price": 6976.43994140625,
+      "cost": 283.3341553403321,
+      "balance_after": 10019.074596387209,
+      "reasoning": "Price is dipping after a strong close on Feb 2nd and momentum is building."
+    },
+    {
+      "day": 12,
+      "date": "2026-02-03",
+      "action": "buy",
+      "quantity": 0.032333,
+      "price": 6917.81005859375,
+      "cost": 223.67355262451173,
+      "balance_after": 9940.430464998537,
+      "reasoning": "Price dipped below 6925, potential upside and momentum building"
+    },
+    {
+      "day": 13,
+      "date": "2026-02-04",
+      "action": "buy",
+      "quantity": 0.03,
+      "price": 6882.72021484375,
+      "cost": 206.48160644531248,
+      "balance_after": 9892.227581729005,
+      "reasoning": "Price is dipping below the recent high and momentum is building."
+    },
+    {
+      "day": 14,
+      "date": "2026-02-05",
+      "action": "buy",
+      "quantity": 0.03397271449027622,
+      "price": 6798.39990234375,
+      "cost": 230.96009887304592,
+      "balance_after": 9773.867243393066,
+      "reasoning": "Price has dipped to a support level and momentum is building up."
+    },
+    {
+      "day": 16,
+      "date": "2026-02-09",
+      "action": "sell",
+      "quantity": 0.431302,
+      "price": 6964.81982421875,
+      "revenue": 3003.9407198251956,
+      "pnl": 3.937341773641207,
+      "balance_after": 10013.124457800437,
+      "reasoning": "Profit taking at current level after strong upward momentum"
+    },
+    {
+      "day": 17,
+      "date": "2026-02-10",
+      "action": "buy",
+      "quantity": 0.43273162107142477,
+      "price": 6941.81005859375,
+      "cost": 3003.9407198251956,
+      "balance_after": 9989.968126537917,
+      "reasoning": "Price dipped below the lower band (0.129819) and momentum is building up."
+    }
+  ],
+  "daily_data": [
+    {
+      "day": 1,
+      "date": "2026-01-16",
+      "price": 6940.009765625,
+      "cash": 9965.299951171875,
+      "position": 0.005,
+      "portfolio_value": 10000.0,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 2,
+      "date": "2026-01-20",
+      "price": 6796.85986328125,
+      "cash": 9863.347053222657,
+      "position": 0.02,
+      "portfolio_value": 9999.284250488281,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 3,
+      "date": "2026-01-21",
+      "price": 6875.6201171875,
+      "cash": 9657.07844970703,
+      "position": 0.05,
+      "portfolio_value": 10000.859455566406,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 4,
+      "date": "2026-01-22",
+      "price": 6913.35009765625,
+      "cash": 9311.410944824218,
+      "position": 0.1,
+      "portfolio_value": 10002.745954589844,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 5,
+      "date": "2026-01-23",
+      "price": 6915.60986328125,
+      "cash": 8965.630451660156,
+      "position": 0.15000000000000002,
+      "portfolio_value": 10002.971931152344,
+      "daily_pnl": 1.8189894035458565e-12,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 6,
+      "date": "2026-01-26",
+      "price": 6950.22998046875,
+      "cash": 7923.095954589843,
+      "position": 0.30000000000000004,
+      "portfolio_value": 10008.164948730468,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 7,
+      "date": "2026-01-27",
+      "price": 6978.60009765625,
+      "cash": 5829.515925292968,
+      "position": 0.6000000000000001,
+      "portfolio_value": 10016.675983886718,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 8,
+      "date": "2026-01-28",
+      "price": 6978.02978515625,
+      "cash": 2340.501032714843,
+      "position": 1.1,
+      "portfolio_value": 10016.33379638672,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 9,
+      "date": "2026-01-29",
+      "price": 6969.009765625,
+      "cash": 1638.3523917988273,
+      "position": 1.2007530000000002,
+      "portfolio_value": 10006.411774902344,
+      "daily_pnl": 1.8189894035458565e-12,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 10,
+      "date": "2026-01-30",
+      "price": 6939.02978515625,
+      "cash": 944.4494132832023,
+      "position": 1.3007530000000003,
+      "portfolio_value": 9970.413223414553,
+      "daily_pnl": 1.8189894035458565e-12,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 11,
+      "date": "2026-02-02",
+      "price": 6976.43994140625,
+      "cash": 661.1152579428701,
+      "position": 1.3413660000000003,
+      "portfolio_value": 10019.074596387209,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 12,
+      "date": "2026-02-03",
+      "price": 6917.81005859375,
+      "cash": 437.4417053183584,
+      "position": 1.3736990000000002,
+      "portfolio_value": 9940.430464998537,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 13,
+      "date": "2026-02-04",
+      "price": 6882.72021484375,
+      "cash": 230.96009887304592,
+      "position": 1.4036990000000003,
+      "portfolio_value": 9892.227581729005,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 14,
+      "date": "2026-02-05",
+      "price": 6798.39990234375,
+      "cash": 0.0,
+      "position": 1.4376717144902764,
+      "portfolio_value": 9773.867243393066,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 15,
+      "date": "2026-02-06",
+      "price": 6932.2998046875,
+      "cash": 0.0,
+      "position": 1.4376717144902764,
+      "portfolio_value": 9966.371345565687,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 16,
+      "date": "2026-02-09",
+      "price": 6964.81982421875,
+      "cash": 3003.9407198251956,
+      "position": 1.0063697144902763,
+      "portfolio_value": 10013.124457800437,
+      "daily_pnl": 1.8189894035458565e-12,
+      "action": "sell",
+      "trade_pnl": 3.937341773641207
+    },
+    {
+      "day": 17,
+      "date": "2026-02-10",
+      "price": 6941.81005859375,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9989.968126537917,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 18,
+      "date": "2026-02-11",
+      "price": 6941.47021484375,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9989.479056943408,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 19,
+      "date": "2026-02-12",
+      "price": 6832.759765625,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9833.033704283192,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 20,
+      "date": "2026-02-13",
+      "price": 6836.169921875,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9837.941264697041,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 21,
+      "date": "2026-02-17",
+      "price": 6843.22021484375,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9848.087350724472,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 22,
+      "date": "2026-02-18",
+      "price": 6881.31005859375,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9902.902495736433,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 23,
+      "date": "2026-02-19",
+      "price": 6861.89013671875,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9874.955260229617,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 24,
+      "date": "2026-02-20",
+      "price": 6909.509765625,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9943.484731787554,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 25,
+      "date": "2026-02-23",
+      "price": 6837.75,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9840.215157237022,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    },
+    {
+      "day": 26,
+      "date": "2026-02-24",
+      "price": 6890.06982421875,
+      "cash": 0.0,
+      "position": 1.439101335561701,
+      "portfolio_value": 9915.508686146579,
+      "daily_pnl": 0.0,
+      "action": "buy",
+      "trade_pnl": null
+    }
+  ],
+  "status": "completed"
+}
