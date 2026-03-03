@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://trading.phtechai.com'),
   title: {
     default: 'AI Trading Benchmark - Compare AI Models in Trading Decisions',
     template: '%s | AI Trading Benchmark',
