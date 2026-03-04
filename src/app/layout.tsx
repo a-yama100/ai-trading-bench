@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://trading.phtechai.com'),
+  metadataBase: new URL('https://trading.phaiworks.com'),
   title: {
     default: 'AI Trading Benchmark - Compare AI Models in Trading Decisions',
     template: '%s | AI Trading Benchmark',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://trading.phtechai.com/',
+    url: 'https://trading.phaiworks.com/',
     siteName: 'AI Trading Benchmark',
     title: 'AI Trading Benchmark - Compare AI Models in Trading Decisions',
     description: 'Compare AI trading performance across GPT-4, Claude, Gemini, and DeepSeek models. Analyze crypto, forex, and stock market decisions with real-time benchmarks.',
@@ -63,7 +63,7 @@ const jsonLd = {
   '@type': 'WebApplication',
   name: 'AI Trading Benchmark',
   description: 'Compare AI trading performance across GPT-4, Claude, Gemini, and DeepSeek models in crypto, forex, and stock markets.',
-  url: 'https://trading.phtechai.com/',
+  url: 'https://trading.phaiworks.com/',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Web',
   offers: {
