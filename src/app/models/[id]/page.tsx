@@ -90,7 +90,7 @@ export default async function ModelDetailPage({ params }: Props) {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-gray-50 rounded-lg p-4 text-center">
             <p className="text-sm text-gray-500">Overall Return</p>
             <p className={'text-2xl font-bold ' + (overallReturn >= 0 ? 'text-green-600' : 'text-red-600')}>

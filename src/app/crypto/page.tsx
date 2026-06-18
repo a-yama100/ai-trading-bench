@@ -50,7 +50,7 @@ export default async function CryptoPage() {
         <p className="text-white/80 mt-2">BTC/USD Trading Benchmark</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl shadow p-4 text-center">
           <p className="text-sm text-gray-500">Total Runs</p>
           <p className="text-2xl font-bold text-gray-900">{totalRuns}</p>
