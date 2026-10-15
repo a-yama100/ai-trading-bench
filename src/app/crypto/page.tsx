@@ -1,6 +1,9 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
+// Rebuild from Supabase every 60s so new benchmark runs show without a redeploy (same as the [id] pages).
+export const revalidate = 60
+
 async function getCryptoRankings() {
   const { data, error } = await supabase
     .from('tb_benchmark_runs')
