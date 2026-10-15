@@ -1,0 +1,106 @@
+
+============================================================
+AI Trading Benchmark
+Model: claude-haiku-5.5
+Category: forex (EUR/USD)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 43753
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 28 days of data
+  Day 1: BUY 4000.000000 @ 1.16 = 4658.53
+  Day 2: HOLD (Price: 1.16)
+  Day 3: HOLD (Price: 1.16)
+  Day 4: HOLD (Price: 1.16)
+  Day 5: HOLD (Price: 1.17)
+  Day 6: SELL 1200.000000 @ 1.17 = 1400.76 (PnL: 3.20)
+  Day 7: SELL 1400.000000 @ 1.18 = 1645.65 (PnL: 15.16)
+  Day 8: SELL 700.000000 @ 1.19 = 830.09 (PnL: 14.85)
+  Day 9: SELL 350.000000 @ 1.19 = 415.68 (PnL: 8.06)
+  Day 10: BUY 2405.000000 @ 1.20 = 2890.24
+  Day 11: HOLD (Price: 1.20)
+  Day 12: HOLD (Price: 1.20)
+  Day 13: SELL 1000.000000 @ 1.18 = 1184.92 (PnL: 6.34)
+  Day 14: HOLD (Price: 1.18)
+  Day 15: SELL 900.000000 @ 1.18 = 1063.45 (PnL: 2.74)
+  Day 16: HOLD (Price: 1.18)
+  Day 17: HOLD (Price: 1.18)
+  Day 18: HOLD (Price: 1.18)
+  Day 19: HOLD (Price: 1.19)
+  Day 20: BUY 2268.812033 @ 1.19 = 2697.53
+  Day 21: HOLD (Price: 1.19)
+  Day 22: HOLD (Price: 1.19)
+  Day 23: HOLD (Price: 1.19)
+  Day 24: SELL 1100.000000 @ 1.18 = 1303.49 (PnL: 4.07)
+  Day 25: HOLD (Price: 1.19)
+  Day 26: HOLD (Price: 1.18)
+  Day 27: HOLD (Price: 1.18)
+  Day 28: SELL 800.000000 @ 1.18 = 946.78 (PnL: 1.75)
+
+============================================================
+RESULTS
+============================================================
+Initial Balance: 10000.00 USD
+Final Balance:   9992.85 USD
+Return:          -0.07%
+Total Trades:    11
+============================================================
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-haiku-5.5_forex_20261015_151140.json
+Benchmark run saved! ID: 50ef72d5-c63a-4404-a15c-db95d2bfa87d
+Trades and daily data saved!
+
+============================================================
+AI Trading Benchmark
+Model: claude-haiku-5.5
+Category: stock (S&P 500)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 96977
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 26 days of data
+  Day 1: HOLD (Price: 6944.47)
+  Day 2: BUY 0.432276 @ 6940.01 = 3000.00
+  Day 3: BUY 0.308966 @ 6796.86 = 2100.00
+  Day 4: BUY 0.350000 @ 6875.62 = 2406.47
+  Day 5: BUY 0.180000 @ 6913.35 = 1244.40
+  Day 6: SELL 0.381373 @ 6915.61 = 2637.43 (PnL: 12.16)
+  Day 7: BUY 0.250000 @ 6950.23 = 1737.56
+  Day 8: BUY 0.150000 @ 6978.60 = 1046.79
+  Day 9: HOLD (Price: 6978.03)
+  Day 10: SELL 0.600000 @ 6969.01 = 4181.41 (PnL: 40.10)
+  Day 11: HOLD (Price: 6939.03)
+  Day 12: BUY 0.350000 @ 6976.44 = 2441.75
+  Day 13: BUY 0.200000 @ 6917.81 = 1383.56
+  Day 14: SELL 0.371961 @ 6882.72 = 2560.10 (PnL: -12.11)
+  Day 15: HOLD (Price: 6798.40)
+  Day 16: BUY 0.300000 @ 6932.30 = 2079.69
+  Day 17: BUY 0.194851 @ 6964.82 = 1357.10
+  Day 18: BUY 0.045000 @ 6941.81 = 312.38
+  Day 19: HOLD (Price: 6941.47)
+  Day 20: SELL 0.600000 @ 6832.76 = 4099.66 (PnL: -52.98)
+  Day 21: BUY 0.319000 @ 6836.17 = 2180.74
+  Day 22: BUY 0.150000 @ 6843.22 = 1026.48
+  Day 23: BUY 0.084000 @ 6881.31 = 578.03
+  Day 24: SELL 0.600000 @ 6861.89 = 4117.13 (PnL: -27.88)
+  Day 25: HOLD (Price: 6909.51)
+  Day 26: HOLD (Price: 6837.75)
+
+============================================================
+RESULTS
+============================================================
+Initial Balance: 10000.00 USD
+Final Balance:   9902.65 USD
+Return:          -0.97%
+Total Trades:    19
+============================================================
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-haiku-5.5_stock_20261015_151259.json
+Benchmark run saved! ID: 5209c685-8846-4dea-8eb6-fe61143a5535
+Trades and daily data saved!

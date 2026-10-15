@@ -1,0 +1,165 @@
+
+============================================================
+AI Trading Benchmark
+Model: claude-opus-5.5
+Category: crypto (Bitcoin)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 81607
+============================================================
+
+Fetching price data...
+Market window: 2026-01-25 to 2026-02-23
+  Day 1: BUY 0.050000 @ 86572.22 = 4328.61
+  Day 2: BUY 0.030000 @ 88267.14 = 2648.01
+  Day 3: BUY 0.015000 @ 89102.57 = 1336.54
+  Day 4: SELL 0.028500 @ 89184.57 = 2541.76 (PnL: 47.81)
+  Day 5: BUY 0.025000 @ 84561.59 = 2114.04
+  Day 6: BUY 0.012000 @ 84128.66 = 1009.54
+  Day 7: BUY 0.007000 @ 78621.12 = 550.35
+  Day 8: SELL 0.040000 @ 76974.45 = 3078.98 (PnL: -370.55)
+  Day 9: BUY 0.023000 @ 78688.77 = 1809.84
+  Day 10: SELL 0.035000 @ 75633.55 = 2647.17 (PnL: -333.65)
+  Day 11: BUY 0.025000 @ 73019.70 = 1825.49
+  Day 12: BUY 0.020000 @ 62702.10 = 1254.04
+  Day 13: SELL 0.036200 @ 70555.39 = 2554.11 (PnL: -397.24)
+  Day 14: BUY 0.020000 @ 69281.97 = 1385.64
+  Day 15: BUY 0.015000 @ 70264.73 = 1053.97
+  Day 16: SELL 0.035000 @ 70120.78 = 2454.23 (PnL: -339.42)
+  Day 17: BUY 0.025000 @ 68793.96 = 1719.85
+  Day 18: BUY 0.015000 @ 66991.97 = 1004.88
+  Day 19: SELL 0.045000 @ 66221.84 = 2979.98 (PnL: -537.17)
+  Day 20: BUY 0.025000 @ 68857.84 = 1721.45
+  Day 21: SELL 0.030000 @ 69767.62 = 2093.03 (PnL: -229.02)
+  Day 22: BUY 0.025000 @ 68788.19 = 1719.70
+  Day 23: BUY 0.020800 @ 68843.16 = 1431.94
+  Day 24: BUY 0.010600 @ 67494.22 = 715.44
+  Day 25: SELL 0.040000 @ 66425.32 = 2657.01 (PnL: -384.19)
+  Day 26: BUY 0.025000 @ 66957.52 = 1673.94
+  Day 27: BUY 0.015000 @ 68005.42 = 1020.08
+  Day 28: SELL 0.045000 @ 68003.77 = 3060.17 (PnL: -322.46)
+  Day 29: BUY 0.025000 @ 67659.39 = 1691.48
+  Day 30: SELL 0.046900 @ 64616.74 = 3030.53 (PnL: -474.37)
+
+============================================================
+RESULTS
+============================================================
+Initial Balance: 10000.00 USD
+Final Balance:   8106.19 USD
+Return:          -18.94%
+Total Trades:    30
+============================================================
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-opus-5.5_crypto_20261015_151251.json
+Benchmark run saved! ID: 2f8a58a3-bbd8-470e-982f-f332b5b9b611
+Trades and daily data saved!
+
+============================================================
+AI Trading Benchmark
+Model: claude-opus-5.5
+Category: forex (EUR/USD)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 88638
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 28 days of data
+  Day 1: BUY 4300.000000 @ 1.16 = 5007.92
+  Day 2: BUY 1500.000000 @ 1.16 = 1741.35
+  Day 3: BUY 1000.000000 @ 1.16 = 1162.49
+  Day 4: SELL 2040.000000 @ 1.16 = 2374.38 (PnL: 0.86)
+  Day 5: BUY 1900.000000 @ 1.17 = 2228.29
+  Day 6: BUY 1000.000000 @ 1.17 = 1167.30
+  Day 7: SELL 2300.000000 @ 1.18 = 2703.56 (PnL: 22.43)
+  Day 8: SELL 2000.000000 @ 1.19 = 2371.69 (PnL: 40.28)
+  Day 9: BUY 2000.000000 @ 1.19 = 2375.30
+  Day 10: SELL 1608.000000 @ 1.20 = 1932.44 (PnL: 51.95)
+  Day 11: BUY 2000.000000 @ 1.20 = 2395.55
+  Day 12: SELL 2300.000000 @ 1.20 = 2752.12 (PnL: 52.86)
+  Day 13: BUY 2500.000000 @ 1.18 = 2962.30
+  Day 14: BUY 1300.000000 @ 1.18 = 1533.83
+  Day 15: BUY 700.000000 @ 1.18 = 827.13
+  Day 16: BUY 300.000000 @ 1.18 = 354.05
+  Day 17: SELL 3300.000000 @ 1.18 = 3886.70 (PnL: 5.98)
+  Day 18: SELL 1500.000000 @ 1.18 = 1773.87 (PnL: 9.91)
+  Day 19: BUY 2500.000000 @ 1.19 = 2976.01
+  Day 20: BUY 1200.000000 @ 1.19 = 1426.75
+  Day 21: SELL 2500.000000 @ 1.19 = 2969.02 (PnL: 23.26)
+  Day 22: SELL 2000.000000 @ 1.19 = 2373.69 (PnL: 17.09)
+  Day 23: BUY 1800.000000 @ 1.19 = 2136.14
+  Day 24: BUY 1800.000000 @ 1.18 = 2132.98
+  Day 25: BUY 1000.000000 @ 1.19 = 1185.19
+  Day 26: SELL 3600.000000 @ 1.18 = 4243.98 (PnL: -2.49)
+  Day 27: SELL 1800.000000 @ 1.18 = 2118.44 (PnL: -4.79)
+  Day 28: SELL 1296.400000 @ 1.18 = 1534.26 (PnL: 5.06)
+
+============================================================
+RESULTS
+============================================================
+Initial Balance: 10000.00 USD
+Final Balance:   10079.09 USD
+Return:          +0.79%
+Total Trades:    28
+============================================================
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-opus-5.5_forex_20261015_151535.json
+Benchmark run saved! ID: 4e5db512-1a6e-47b0-82fb-a2d1ef6b4584
+Trades and daily data saved!
+
+============================================================
+AI Trading Benchmark
+Model: claude-opus-5.5
+Category: stock (S&P 500)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 79148
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 26 days of data
+  Day 1: BUY 0.720000 @ 6944.47 = 5000.02
+  Day 2: BUY 0.300000 @ 6940.01 = 2082.00
+  Day 3: BUY 0.200000 @ 6796.86 = 1359.37
+  Day 4: BUY 0.150000 @ 6875.62 = 1031.34
+  Day 5: BUY 0.050000 @ 6913.35 = 345.67
+  Day 6: SELL 0.500000 @ 6915.61 = 3457.80 (PnL: 0.62)
+  Day 7: BUY 0.250000 @ 6950.23 = 1737.56
+  Day 8: SELL 0.400000 @ 6978.60 = 2791.44 (PnL: 23.55)
+  Day 9: SELL 0.300000 @ 6978.03 = 2093.41 (PnL: 17.49)
+  Day 10: BUY 0.500000 @ 6969.01 = 3484.50
+  Day 11: BUY 0.200000 @ 6939.03 = 1387.81
+  Day 12: BUY 0.150000 @ 6976.44 = 1046.47
+  Day 13: SELL 0.400000 @ 6917.81 = 2767.12 (PnL: -6.64)
+  Day 14: BUY 0.250000 @ 6882.72 = 1720.68
+  Day 15: BUY 0.140000 @ 6798.40 = 951.78
+  Day 16: BUY 0.070000 @ 6932.30 = 485.26
+  Day 17: SELL 0.450000 @ 6964.82 = 3134.17 (PnL: 18.53)
+  Day 18: SELL 0.350000 @ 6941.81 = 2429.63 (PnL: 6.36)
+  Day 19: SELL 0.250000 @ 6941.47 = 1735.37 (PnL: 4.46)
+  Day 20: BUY 0.500000 @ 6832.76 = 3416.38
+  Day 21: BUY 0.250000 @ 6836.17 = 1709.04
+  Day 22: BUY 0.200000 @ 6843.22 = 1368.64
+  Day 23: BUY 0.100000 @ 6881.31 = 688.13
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+BENCHMARK FAILED: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Traceback (most recent call last):
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 474, in main
+    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 289, in run_simulation
+    response = call_ai(model_id, prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 135, in call_ai
+    data = _json_or_raise(response, 'Anthropic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 103, in _json_or_raise
+    raise AIProviderError("{} HTTP {}: {}".format(provider, response.status_code, message))
+AIProviderError: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-opus-5.5_stock_20261015_151756.json
+Skipping Supabase save due to failure. Error saved locally.
