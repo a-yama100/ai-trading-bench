@@ -1,0 +1,123 @@
+
+============================================================
+AI Trading Benchmark
+Model: claude-opus-5.5
+Category: crypto (Bitcoin)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 6252
+============================================================
+
+Fetching price data...
+Market window: 2026-01-25 to 2026-02-23
+  Day 1: BUY 0.050000 @ 86572.22 = 4328.61
+  Day 2: BUY 0.030000 @ 88267.14 = 2648.01
+  Day 3: BUY 0.015000 @ 89102.57 = 1336.54
+  Day 4: SELL 0.030000 @ 89184.57 = 2675.54 (PnL: 50.33)
+  Day 5: BUY 0.025000 @ 84561.59 = 2114.04
+  Day 6: BUY 0.015000 @ 84128.66 = 1261.93
+  Day 7: BUY 0.006000 @ 78621.12 = 471.73
+  Day 8: SELL 0.045000 @ 76974.45 = 3463.85 (PnL: -417.28)
+  Day 9: BUY 0.022000 @ 78688.77 = 1731.15
+  Day 10: SELL 0.030000 @ 75633.55 = 2269.01 (PnL: -287.81)
+  Day 11: BUY 0.025000 @ 73019.70 = 1825.49
+  Day 12: BUY 0.022000 @ 62702.10 = 1379.45
+  Day 13: SELL 0.040000 @ 70555.39 = 2822.22 (PnL: -434.35)
+  Day 14: BUY 0.030000 @ 69281.97 = 2078.46
+  Day 15: BUY 0.015000 @ 70264.73 = 1053.97
+  Day 16: SELL 0.040000 @ 70120.78 = 2804.83 (PnL: -368.41)
+  Day 17: BUY 0.025000 @ 68793.96 = 1719.85
+  Day 18: BUY 0.015000 @ 66991.97 = 1004.88
+  Day 19: SELL 0.040000 @ 66221.84 = 2648.87 (PnL: -463.55)
+  Day 20: BUY 0.025000 @ 68857.84 = 1721.45
+  Day 21: BUY 0.015000 @ 69767.62 = 1046.51
+  Day 22: SELL 0.040000 @ 68788.19 = 2751.53 (PnL: -319.76)
+  Day 23: BUY 0.025000 @ 68843.16 = 1721.08
+  Day 24: BUY 0.015000 @ 67494.22 = 1012.41
+  Day 25: SELL 0.040000 @ 66425.32 = 2657.01 (PnL: -378.25)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+BENCHMARK FAILED: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Traceback (most recent call last):
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 474, in main
+    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 289, in run_simulation
+    response = call_ai(model_id, prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 135, in call_ai
+    data = _json_or_raise(response, 'Anthropic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 103, in _json_or_raise
+    raise AIProviderError("{} HTTP {}: {}".format(provider, response.status_code, message))
+AIProviderError: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-opus-5.5_crypto_20261015_142445.json
+Skipping Supabase save due to failure. Error saved locally.
+
+============================================================
+AI Trading Benchmark
+Model: claude-opus-5.5
+Category: forex (EUR/USD)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 51849
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 28 days of data
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+BENCHMARK FAILED: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Traceback (most recent call last):
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 474, in main
+    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 289, in run_simulation
+    response = call_ai(model_id, prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 135, in call_ai
+    data = _json_or_raise(response, 'Anthropic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 103, in _json_or_raise
+    raise AIProviderError("{} HTTP {}: {}".format(provider, response.status_code, message))
+AIProviderError: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-opus-5.5_forex_20261015_142458.json
+Skipping Supabase save due to failure. Error saved locally.
+
+============================================================
+AI Trading Benchmark
+Model: claude-opus-5.5
+Category: stock (S&P 500)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 98084
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 26 days of data
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+BENCHMARK FAILED: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Traceback (most recent call last):
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 474, in main
+    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 289, in run_simulation
+    response = call_ai(model_id, prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 135, in call_ai
+    data = _json_or_raise(response, 'Anthropic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 103, in _json_or_raise
+    raise AIProviderError("{} HTTP {}: {}".format(provider, response.status_code, message))
+AIProviderError: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-opus-5.5_stock_20261015_142513.json
+Skipping Supabase save due to failure. Error saved locally.

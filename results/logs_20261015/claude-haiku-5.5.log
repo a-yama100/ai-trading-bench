@@ -1,0 +1,125 @@
+
+============================================================
+AI Trading Benchmark
+Model: claude-haiku-5.5
+Category: crypto (Bitcoin)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 44763
+============================================================
+
+Fetching price data...
+Market window: 2026-01-25 to 2026-02-23
+  Day 1: BUY 0.080857 @ 86572.22 = 6999.97
+  Day 2: BUY 0.017000 @ 88267.14 = 1500.54
+  Day 3: BUY 0.008000 @ 89102.57 = 712.82
+  Day 4: BUY 0.005000 @ 89184.57 = 445.92
+  Day 5: HOLD (Price: 84561.59)
+  Day 6: HOLD (Price: 84128.66)
+  Day 7: HOLD (Price: 78621.12)
+  Day 8: HOLD (Price: 76974.45)
+  Day 9: HOLD (Price: 78688.77)
+  Day 10: HOLD (Price: 75633.55)
+  Day 11: HOLD (Price: 73019.70)
+  Day 12: HOLD (Price: 62702.10)
+  Day 13: HOLD (Price: 70555.39)
+  Day 14: HOLD (Price: 69281.97)
+  Day 15: HOLD (Price: 70264.73)
+  Day 16: HOLD (Price: 70120.78)
+  Day 17: SELL 0.050000 @ 68793.96 = 3439.70 (PnL: -916.93)
+  Day 18: HOLD (Price: 66991.97)
+  Day 19: HOLD (Price: 66221.84)
+  Day 20: BUY 0.027000 @ 68857.84 = 1859.16
+  Day 21: BUY 0.015000 @ 69767.62 = 1046.51
+  Day 22: HOLD (Price: 68788.19)
+  Day 23: HOLD (Price: 68843.16)
+  Day 24: HOLD (Price: 67494.22)
+  Day 25: HOLD (Price: 66425.32)
+  Day 26: HOLD (Price: 66957.52)
+  Day 27: HOLD (Price: 68005.42)
+  Day 28: BUY 0.007000 @ 68003.77 = 476.03
+  Day 29: HOLD (Price: 67659.39)
+  Day 30: HOLD (Price: 64616.74)
+
+============================================================
+RESULTS
+============================================================
+Initial Balance: 10000.00 USD
+Final Balance:   7497.34 USD
+Return:          -25.03%
+Total Trades:    8
+============================================================
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-haiku-5.5_crypto_20261015_142400.json
+Benchmark run saved! ID: 9aacd7ad-79cd-4cf9-b059-439f8ccee783
+Trades and daily data saved!
+
+============================================================
+AI Trading Benchmark
+Model: claude-haiku-5.5
+Category: forex (EUR/USD)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 88301
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 28 days of data
+  Day 1: BUY 4000.000000 @ 1.16 = 4658.53
+  Day 2: HOLD (Price: 1.16)
+  Day 3: HOLD (Price: 1.16)
+  Day 4: HOLD (Price: 1.16)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+BENCHMARK FAILED: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Traceback (most recent call last):
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 474, in main
+    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 289, in run_simulation
+    response = call_ai(model_id, prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 135, in call_ai
+    data = _json_or_raise(response, 'Anthropic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 103, in _json_or_raise
+    raise AIProviderError("{} HTTP {}: {}".format(provider, response.status_code, message))
+AIProviderError: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-haiku-5.5_forex_20261015_142446.json
+Skipping Supabase save due to failure. Error saved locally.
+
+============================================================
+AI Trading Benchmark
+Model: claude-haiku-5.5
+Category: stock (S&P 500)
+Days: 30
+Initial Balance: 10000.00 USD
+Seed: 94060
+============================================================
+
+Fetching price data...
+Market window: 2026-01-15 to 2026-02-23
+Warning: Only got 26 days of data
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+BENCHMARK FAILED: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Traceback (most recent call last):
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 474, in main
+    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 289, in run_simulation
+    response = call_ai(model_id, prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 135, in call_ai
+    data = _json_or_raise(response, 'Anthropic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\サイト管理\PHAIWorks\ai-trading-bench\run_benchmark.py", line 103, in _json_or_raise
+    raise AIProviderError("{} HTTP {}: {}".format(provider, response.status_code, message))
+AIProviderError: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+
+Result saved locally: D:\サイト管理\PHAIWorks\ai-trading-bench\results\claude-haiku-5.5_stock_20261015_142458.json
+Skipping Supabase save due to failure. Error saved locally.

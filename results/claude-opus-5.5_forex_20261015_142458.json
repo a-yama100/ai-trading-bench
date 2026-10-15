@@ -1,0 +1,15 @@
+{
+  "model_id": "claude-opus-5.5",
+  "category": "forex",
+  "status": "failed",
+  "error": "Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\サイト管理\\PHAIWorks\\ai-trading-bench\\run_benchmark.py\", line 474, in main\n    result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\サイト管理\\PHAIWorks\\ai-trading-bench\\run_benchmark.py\", line 289, in run_simulation\n    response = call_ai(model_id, prompt)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\サイト管理\\PHAIWorks\\ai-trading-bench\\run_benchmark.py\", line 135, in call_ai\n    data = _json_or_raise(response, 'Anthropic')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\サイト管理\\PHAIWorks\\ai-trading-bench\\run_benchmark.py\", line 103, in _json_or_raise\n    raise AIProviderError(\"{} HTTP {}: {}\".format(provider, response.status_code, message))\nAIProviderError: Anthropic HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\n",
+  "seed": null,
+  "initial_balance": 10000,
+  "final_balance": 0,
+  "return_pct": 0,
+  "total_trades": 0,
+  "winning_trades": 0,
+  "trades": [],
+  "daily_data": []
+}

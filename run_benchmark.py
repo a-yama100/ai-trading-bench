@@ -31,14 +31,27 @@ MODEL_CONFIGS = {
     'gpt-4.1-mini': {'provider': 'openai', 'model': 'gpt-4.1-mini'},
     'claude-opus-4': {'provider': 'anthropic', 'model': 'claude-opus-4-20250514'},
     'claude-sonnet-4': {'provider': 'anthropic', 'model': 'claude-sonnet-4-20250514'},
-    'claude-haiku-3.5': {'provider': 'anthropic', 'model': 'claude-3-haiku-20240307'},
+    # The 2026-02 runs labelled 'claude-haiku-3.5' actually called Claude 3 Haiku; they are relabelled 'claude-haiku-3'.
+    'claude-haiku-3.5': {'provider': 'anthropic', 'model': 'claude-3-5-haiku-20241022'},
+    'claude-haiku-3': {'provider': 'anthropic', 'model': 'claude-3-haiku-20240307'},
+    # Claude 5 family (2026-10). Haiku/Sonnet can turn thinking off; Opus 5.5 and Fable 5.1 cannot, so they run at the lowest effort.
+    'claude-haiku-5.5': {'provider': 'anthropic', 'model': 'claude-haiku-5-5', 'extra': {'thinking': {'type': 'disabled'}}},
+    'claude-sonnet-5.5': {'provider': 'anthropic', 'model': 'claude-sonnet-5-5', 'extra': {'thinking': {'type': 'between_tools'}}},
+    'claude-opus-5.5': {'provider': 'anthropic', 'model': 'claude-opus-5-5', 'max_tokens': 2000, 'extra': {'output_config': {'effort': 'low'}}},
+    'claude-fable-5.1': {'provider': 'anthropic', 'model': 'claude-fable-5-1', 'max_tokens': 2000, 'extra': {'output_config': {'effort': 'low'}}},
     'gemini-2.5-pro': {'provider': 'google', 'model': 'gemini-2.5-pro'},
     'gemini-2.5-flash': {'provider': 'google', 'model': 'gemini-2.5-flash'},
     'gemini-2.0-flash': {'provider': 'google', 'model': 'gemini-2.0-flash'},
+    # Gemini 3.x (2026-10). 3.8 Flash can turn thinking off; 3.1 Pro only runs in thinking mode, so it uses the lowest level.
+    'gemini-3.8-flash': {'provider': 'google', 'model': 'gemini-3.8-flash', 'extra': {'thinkingConfig': {'thinkingBudget': 0}}},
+    'gemini-3.1-pro': {'provider': 'google', 'model': 'gemini-3.1-pro-preview', 'max_tokens': 4000, 'extra': {'thinkingConfig': {'thinkingLevel': 'low'}}},
     'grok-3': {'provider': 'xai', 'model': 'grok-3'},
     'grok-3-mini': {'provider': 'xai', 'model': 'grok-3-mini'},
     'grok-4-fast': {'provider': 'xai', 'model': 'grok-4-fast-non-reasoning'},
     'grok-4-1-fast': {'provider': 'xai', 'model': 'grok-4-1-fast-non-reasoning'},
+    # Grok 4.x (2026-10). 4.3 can turn reasoning off; 4.7 always reasons (no reasoning_effort setting).
+    'grok-4.3': {'provider': 'xai', 'model': 'grok-4.3', 'extra': {'reasoning_effort': 'none'}},
+    'grok-4.7': {'provider': 'xai', 'model': 'grok-4.7', 'max_tokens': 2000},
     # Ollama models
     'phi3-mini': {'provider': 'ollama', 'model': 'phi3:mini'},
     'llama3.2-3b': {'provider': 'ollama', 'model': 'llama3.2:3b'},
@@ -56,9 +69,10 @@ CATEGORY_ASSETS = {
     'stock': {'symbol': '^GSPC', 'name': 'S&P 500', 'asset_id': 'SPX'},
 }
 
-def get_price_data(symbol, days=30):
+def get_price_data(symbol, days=30, end_date=None):
     import yfinance as yf
-    end_date = datetime.now()
+    # end_date pins the market window so new models trade the same days as earlier runs.
+    end_date = end_date or datetime.now()
     start_date = end_date - timedelta(days=days + 10)
     ticker = yf.Ticker(symbol)
     df = ticker.history(start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'))
@@ -74,53 +88,77 @@ def get_price_data(symbol, days=30):
         })
     return prices[-days:] if len(prices) > days else prices
 
+class AIProviderError(Exception):
+    """The API itself failed (HTTP error, no credits, empty reply). The run is aborted."""
+
+
+def _json_or_raise(response, provider):
+    try:
+        data = response.json()
+    except ValueError:
+        data = {}
+    if not response.ok:
+        err = data.get('error') if isinstance(data, dict) else None
+        message = err.get('message') if isinstance(err, dict) else (err or str(data)[:300])
+        raise AIProviderError("{} HTTP {}: {}".format(provider, response.status_code, message))
+    return data
+
+
 def call_ai(model_id, prompt):
     config = MODEL_CONFIGS.get(model_id)
     if not config:
         raise ValueError("Unknown model: {}".format(model_id))
     provider = config['provider']
     model = config['model']
-    
+    max_tokens = config.get('max_tokens', 500)
+    extra = config.get('extra', {})
+
     if provider == 'openai':
         api_key = os.getenv('OPENAI_API_KEY')
         response = requests.post(
             AI_ENDPOINTS['openai'],
             headers={'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(api_key)},
-            json={'model': model, 'messages': [{'role': 'user', 'content': prompt}], 'temperature': 0.3, 'max_tokens': 500},
+            json={'model': model, 'messages': [{'role': 'user', 'content': prompt}], 'temperature': 0.3, 'max_tokens': max_tokens, **extra},
             timeout=120
         )
-        data = response.json()
-        return data.get('choices', [{}])[0].get('message', {}).get('content', '')
-    
+        data = _json_or_raise(response, 'OpenAI')
+        text = data.get('choices', [{}])[0].get('message', {}).get('content', '')
+
     elif provider == 'anthropic':
         api_key = os.getenv('ANTHROPIC_API_KEY')
         response = requests.post(
             AI_ENDPOINTS['anthropic'],
             headers={'Content-Type': 'application/json', 'x-api-key': api_key, 'anthropic-version': '2023-06-01'},
-            json={'model': model, 'max_tokens': 500, 'messages': [{'role': 'user', 'content': prompt}]},
+            json={'model': model, 'max_tokens': max_tokens, 'messages': [{'role': 'user', 'content': prompt}], **extra},
             timeout=120
         )
-        data = response.json()
-        return data.get('content', [{}])[0].get('text', '')
-    
+        data = _json_or_raise(response, 'Anthropic')
+        # Models that think return a thinking block before the text block.
+        text = next((b.get('text', '') for b in data.get('content', []) if b.get('type') == 'text'), '')
+
     elif provider == 'google':
         api_key = os.getenv('GOOGLE_API_KEY')
         url = AI_ENDPOINTS['google'].format(model=model) + '?key={}'.format(api_key)
+        # Without a cap, Gemini's thinking tokens are unbounded (and billed).
         response = requests.post(url, headers={'Content-Type': 'application/json'},
-            json={'contents': [{'parts': [{'text': prompt}]}]}, timeout=120)
-        data = response.json()
-        return data.get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '')
-    
+            json={'contents': [{'parts': [{'text': prompt}]}],
+                  'generationConfig': {'maxOutputTokens': max_tokens, **extra}},
+            timeout=240)
+        data = _json_or_raise(response, 'Google')
+        parts = (data.get('candidates') or [{}])[0].get('content', {}).get('parts', [])
+        text = ''.join(p.get('text', '') for p in parts if not p.get('thought'))
+
     elif provider == 'xai':
         api_key = os.getenv('XAI_API_KEY')
         response = requests.post(
             AI_ENDPOINTS['xai'],
             headers={'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(api_key)},
-            json={'model': model, 'messages': [{'role': 'user', 'content': prompt}], 'temperature': 0.3, 'max_tokens': 500},
+            json={'model': model, 'messages': [{'role': 'user', 'content': prompt}], 'temperature': 0.3, 'max_tokens': max_tokens, **extra},
             timeout=120
         )
-        data = response.json()
-        return data.get('choices', [{}])[0].get('message', {}).get('content', '')
+        data = _json_or_raise(response, 'xAI')
+        text = data.get('choices', [{}])[0].get('message', {}).get('content', '')
+
     elif provider == 'ollama':
         try:
             response = requests.post(
@@ -133,7 +171,12 @@ def call_ai(model_id, prompt):
         except Exception as e:
             print("    Ollama error: {}".format(e))
             return ''
-    return ''
+    else:
+        return ''
+
+    if not (text or '').strip():
+        raise AIProviderError("{}: empty response".format(model_id))
+    return text
 
 def parse_decision(response):
     try:
@@ -203,7 +246,7 @@ Respond ONLY with JSON:
     )
     return prompt
 
-def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None):
+def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None, end_date=None):
     if seed is None:
         seed = random.randint(1, 100000)
     random.seed(seed)
@@ -224,7 +267,9 @@ def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None
     print("")
     
     print("Fetching price data...")
-    prices = get_price_data(asset['symbol'], days)
+    prices = get_price_data(asset['symbol'], days, end_date)
+    if prices:
+        print("Market window: {} to {}".format(prices[0]['date'], prices[-1]['date']))
     if len(prices) < days:
         print("Warning: Only got {} days of data".format(len(prices)))
         days = len(prices)
@@ -240,12 +285,9 @@ def run_simulation(model_id, category, days=30, initial_balance=10000, seed=None
         
         prompt = build_prompt(day, days, cash, position, current_price, prices[:day], asset['name'])
         
-        try:
-            response = call_ai(model_id, prompt)
-            decision = parse_decision(response)
-        except Exception as e:
-            print("  Day {}: AI error - {}".format(day, e))
-            decision = {'action': 'hold', 'quantity': 0, 'reasoning': str(e)}
+        # An API failure aborts the run (it is not saved); recording it as "hold" made broken runs look valid.
+        response = call_ai(model_id, prompt)
+        decision = parse_decision(response)
         
         action = decision['action']
         quantity = decision['quantity']
@@ -413,6 +455,8 @@ def main():
     parser.add_argument('-b', '--balance', type=float, default=10000)
     parser.add_argument('-s', '--seed', type=int)
     parser.add_argument('--save', action='store_true')
+    parser.add_argument('--end-date', help='Pin the market window: the last trading day is the day before this date '
+                        '(YYYY-MM-DD). The 2026-02 runs used 2026-02-24.')
     parser.add_argument('--list-models', action='store_true')
     args = parser.parse_args()
     
@@ -426,7 +470,8 @@ def main():
         parser.error("Required: -m/--model")
     
     try:
-        result = run_simulation(args.model, args.category, args.days, args.balance, args.seed)
+        end_date = datetime.strptime(args.end_date, '%Y-%m-%d') if args.end_date else None
+        result = run_simulation(args.model, args.category, args.days, args.balance, args.seed, end_date)
         result['status'] = 'completed'
     except Exception as e:
         print("")
