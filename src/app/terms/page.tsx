@@ -67,12 +67,12 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-800 mb-3">9. Contact</h2>
           <p className="text-gray-600">
-            If you have any questions about these Terms of Service, please contact us through our website.
+            If you have any questions about these Terms of Service, please use our <a href="https://www.phaiworks.com/contact" className="text-blue-600 hover:underline">contact form</a>.
           </p>
         </section>
 
         <p className="text-gray-500 text-sm mt-8">
-          Last updated: January 2026
+          Last updated: November 2026
         </p>
       </div>
     </div>

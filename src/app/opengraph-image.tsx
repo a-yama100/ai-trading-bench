@@ -45,7 +45,7 @@ export default async function Image() {
             maxWidth: '900px',
           }}
         >
-          Compare GPT-4, Claude, Gemini, and DeepSeek in Trading Decisions
+          Compare GPT, Claude, Gemini, and Grok in Trading Decisions
         </div>
         <div
           style={{

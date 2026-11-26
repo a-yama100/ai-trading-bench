@@ -133,7 +133,7 @@ export default async function StockPage() {
                       {run.total_trades}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-gray-900 font-medium">
-                      
+                      {'$' + Number(run.final_balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
                   </tr>
                 )

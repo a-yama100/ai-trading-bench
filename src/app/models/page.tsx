@@ -72,6 +72,7 @@ function getProviderName(provider: string) {
     case 'anthropic': return 'Anthropic'
     case 'google': return 'Google'
     case 'xai': return 'xAI'
+    case 'ollama': return 'Ollama (local)'
     default: return provider
   }
 }
@@ -92,7 +93,7 @@ export default async function ModelsPage() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">AI Models</h1>
-        <p className="text-gray-600 mt-2">All AI models participating in the trading benchmark. Click on a model to view detailed performance.</p>
+        <p className="text-gray-600 mt-2">Every AI model in the trading benchmark. Click a model to see its results.</p>
       </div>
 
       <div className="space-y-8">
@@ -108,7 +109,7 @@ export default async function ModelsPage() {
                   <Link
                     key={model.id}
                     href={'/models/' + model.id}
-                    className="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors block"
+                    className="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-4">
                       <span className={getProviderColor(provider) + ' px-3 py-1 rounded-full text-xs font-medium'}>

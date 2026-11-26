@@ -3,41 +3,41 @@ import { jsonLd as toJsonLd } from '@/lib/security/escapeHtml'
 
 export const metadata: Metadata = {
   title: 'FAQ',
-  description: 'Frequently asked questions about AI Trading Benchmark - How it works, supported AI models, and benchmark methodology.',
+  description: 'Answers to common questions about AI Trading Benchmark: how it works, which AI models and markets are tested, and how the results are calculated.',
 }
 
 const faqs = [
   {
     question: 'What is AI Trading Benchmark?',
-    answer: 'AI Trading Benchmark is a platform that compares the trading decision-making capabilities of different AI models (GPT-4, Claude, Gemini, Grok) across crypto, forex, and stock markets using simulated trading scenarios.',
+    answer: 'AI Trading Benchmark compares how different AI models make trading decisions. Models from OpenAI (GPT), Anthropic (Claude), Google (Gemini) and xAI (Grok), plus a few small models run locally with Ollama, all trade the same markets in a simulation.',
   },
   {
     question: 'How does the benchmark work?',
-    answer: 'Each AI model is given the same market data and asked to make trading decisions (buy, sell, or hold). The benchmark tracks portfolio performance over a 30-day period, measuring returns, win rates, and risk-adjusted performance.',
+    answer: 'Each model starts with a virtual $10,000. Every trading day, it sees the current price, its cash and position, and the last five days of prices, then chooses to buy, sell or hold. A run lasts up to 30 trading days. At the end, we record the return, the number of trades and the number of profitable sells.',
   },
   {
     question: 'Which AI models are compared?',
-    answer: 'We currently benchmark GPT-4 (OpenAI), Claude (Anthropic), Gemini (Google), and Grok (xAI). Each model uses its default configuration for fair comparison.',
+    answer: 'The list includes GPT models from OpenAI, Claude models from Anthropic, Gemini models from Google, Grok models from xAI, and small open models such as Llama, Phi and Gemma run locally. Every model gets the same prompt and the same price data. The full list is on the Models page.',
   },
   {
     question: 'Is real money used in the benchmarks?',
-    answer: 'No. All benchmarks use simulated trading with a virtual starting balance. No real money or actual trades are involved. This is purely for comparing AI decision-making capabilities.',
+    answer: 'No. All trades are simulated with a virtual balance. No real money is used and no real orders are placed. The goal is only to compare how AI models make decisions.',
   },
   {
-    question: 'How often are benchmarks run?',
-    answer: 'Benchmarks are run regularly using real historical market data. Results are updated as new benchmark runs are completed.',
+    question: 'Where does the price data come from?',
+    answer: 'We use real historical daily prices from Yahoo Finance. Where possible, new models are tested on the same dates as earlier runs, so the results can be compared fairly. Results on this site are updated when new runs finish.',
   },
   {
     question: 'What markets are covered?',
-    answer: 'We cover three major market categories: Cryptocurrency (BTC, ETH, SOL), Forex (EUR/USD, GBP/USD, USD/JPY), and Stocks (major indices and popular stocks).',
+    answer: 'Three markets: cryptocurrency (Bitcoin against the US dollar, BTC/USD), forex (the euro against the US dollar, EUR/USD), and stocks (the S&P 500 index).',
   },
   {
     question: 'Can I use these results for actual trading?',
-    answer: 'The benchmark results are for informational and educational purposes only. Past simulated performance does not guarantee future results. Always do your own research before making investment decisions.',
+    answer: 'No. The results are for information and education only. A good result in a short simulation does not mean a model will make money in real markets. Always do your own research before you invest.',
   },
   {
     question: 'How is win rate calculated?',
-    answer: 'Win rate is the percentage of profitable trades out of total trades executed. A trade is considered a win if it results in a positive return after closing the position.',
+    answer: 'Win rate is the number of profitable sell trades divided by the total number of trades, including buys. A sell counts as profitable when the selling price is higher than the average buying price.',
   },
 ]
 

@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           <ul className="list-disc list-inside text-gray-600 mt-2 space-y-1">
             <li>Usage data (pages visited, time spent, browser type)</li>
             <li>Technical data (IP address, device information)</li>
-            <li>Cookies for site functionality</li>
+            <li>Cookies set by Google Analytics</li>
           </ul>
         </section>
 
@@ -51,6 +51,7 @@ export default function PrivacyPage() {
           </p>
           <ul className="list-disc list-inside text-gray-600 mt-2 space-y-1">
             <li>Vercel (hosting)</li>
+            <li>Google Analytics (visitor statistics)</li>
             <li>Supabase (database)</li>
             <li>AI providers (OpenAI, Anthropic, Google, xAI) for benchmark execution</li>
           </ul>
@@ -62,7 +63,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-800 mb-3">6. Cookies</h2>
           <p className="text-gray-600">
-            We use essential cookies to ensure the proper functioning of the Service. You can configure your browser to refuse cookies, but this may affect your ability to use certain features.
+            We use Google Analytics, which sets cookies to measure how visitors use the site. We do not use advertising cookies. You can block or delete cookies in your browser settings; the site still works without them.
           </p>
         </section>
 
@@ -102,12 +103,12 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-semibold text-gray-800 mb-3">11. Contact Us</h2>
           <p className="text-gray-600">
-            If you have questions about this Privacy Policy, please contact us through our website.
+            If you have questions about this Privacy Policy, please use our <a href="https://www.phaiworks.com/contact" className="text-blue-600 hover:underline">contact form</a>.
           </p>
         </section>
 
         <p className="text-gray-500 text-sm mt-8">
-          Last updated: January 2026
+          Last updated: November 2026
         </p>
       </div>
     </div>

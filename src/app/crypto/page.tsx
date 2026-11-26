@@ -66,7 +66,9 @@ export default async function CryptoPage() {
         </div>
         <div className="bg-white rounded-xl shadow p-4 text-center">
           <p className="text-sm text-gray-500">Best Return</p>
-          <p className="text-2xl font-bold text-green-600">+{bestReturn.toFixed(2)}%</p>
+          <p className={'text-2xl font-bold ' + (bestReturn >= 0 ? 'text-green-600' : 'text-red-600')}>
+            {bestReturn >= 0 ? '+' : ''}{bestReturn.toFixed(2)}%
+          </p>
         </div>
         <div className="bg-white rounded-xl shadow p-4 text-center">
           <p className="text-sm text-gray-500">Worst Return</p>
@@ -131,7 +133,7 @@ export default async function CryptoPage() {
                       {run.total_trades}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-gray-900 font-medium">
-                      
+                      {'$' + Number(run.final_balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
                   </tr>
                 )

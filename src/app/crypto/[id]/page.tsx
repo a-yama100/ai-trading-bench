@@ -110,9 +110,11 @@ export default async function CryptoModelDetailPage({ params }: Props) {
         <div className="grid md:grid-cols-2 gap-4 mb-8">
           <div className="bg-white rounded-xl shadow p-6 border-l-4 border-green-500">
             <h3 className="text-sm font-medium text-gray-500 mb-2">Best Performance</h3>
-            <p className="text-3xl font-bold text-green-600">+{Number(bestRun.return_pct).toFixed(2)}%</p>
+            <p className={'text-3xl font-bold ' + (Number(bestRun.return_pct) >= 0 ? 'text-green-600' : 'text-red-600')}>
+              {Number(bestRun.return_pct) >= 0 ? '+' : ''}{Number(bestRun.return_pct).toFixed(2)}%
+            </p>
             <p className="text-sm text-gray-500 mt-2">
-              {bestRun.total_trades} trades | Final: 
+              {bestRun.total_trades} trades | Final: {'$' + Number(bestRun.final_balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
           </div>
           <div className="bg-white rounded-xl shadow p-6 border-l-4 border-red-500">
@@ -121,7 +123,7 @@ export default async function CryptoModelDetailPage({ params }: Props) {
               {Number(worstRun.return_pct) >= 0 ? '+' : ''}{Number(worstRun.return_pct).toFixed(2)}%
             </p>
             <p className="text-sm text-gray-500 mt-2">
-              {worstRun.total_trades} trades | Final: 
+              {worstRun.total_trades} trades | Final: {'$' + Number(worstRun.final_balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
           </div>
         </div>
@@ -179,8 +181,8 @@ export default async function CryptoModelDetailPage({ params }: Props) {
                   </td>
                   <td className="px-6 py-4 text-right text-gray-600">{run.total_trades}</td>
                   <td className="px-6 py-4 text-right text-gray-600">{run.winning_trades}</td>
-                  <td className="px-6 py-4 text-right text-gray-600"></td>
-                  <td className="px-6 py-4 text-right font-medium text-gray-900"></td>
+                  <td className="px-6 py-4 text-right text-gray-600">{'$' + Number(run.initial_balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                  <td className="px-6 py-4 text-right font-medium text-gray-900">{'$' + Number(run.final_balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 </tr>
               ))}
               {(!runs || runs.length === 0) && (

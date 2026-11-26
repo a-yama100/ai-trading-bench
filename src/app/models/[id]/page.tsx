@@ -26,6 +26,7 @@ const PROVIDER_NAMES: Record<string, string> = {
   anthropic: 'Anthropic',
   google: 'Google',
   xai: 'xAI',
+  ollama: 'Ollama (local)',
 }
 
 export default async function ModelDetailPage({ params }: Props) {
@@ -183,7 +184,7 @@ export default async function ModelDetailPage({ params }: Props) {
                   </td>
                   <td className="px-4 py-4 text-right text-gray-600">{run.total_trades}</td>
                   <td className="px-4 py-4 text-right text-gray-900 font-medium">
-                    
+                    {'$' + Number(run.final_balance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </td>
                   <td className="px-4 py-4 text-right text-gray-500">
                     {new Date(run.finished_at).toLocaleDateString()}

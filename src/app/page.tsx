@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Rebuild from Supabase every 60s so new benchmark runs show without a redeploy (same as the [id] pages).
 export const revalidate = 60
@@ -21,25 +22,21 @@ const CATEGORIES: CategoryData[] = [
 async function getTopModels() {
   const results: Record<string, Array<{ model_id: string; display_name: string; return_pct: number }>> = {}
 
-  // まずモデル一覧を取得
-  const { data: models, error: modelsError } = await supabase
+  // Load the model names first
+  const { data: models } = await supabase
     .from('shared_models')
     .select('id, display_name')
-  
-  console.log('Models:', models, 'Error:', modelsError)
   
   const modelMap = new Map(models?.map(m => [m.id, m.display_name]) || [])
 
   for (const cat of CATEGORIES) {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('tb_benchmark_runs')
       .select('model_id, return_pct')
       .eq('category_id', cat.id)
       .eq('status', 'completed')
       .order('return_pct', { ascending: false })
       .limit(3)
-
-    console.log(`Category ${cat.id}:`, data, 'Error:', error)
 
     results[cat.id] = (data || []).map((row) => ({
       model_id: row.model_id,
@@ -66,9 +63,19 @@ export default async function Home() {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">AI Trading Benchmark</h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Compare how different AI models perform in trading decisions across
-          cryptocurrency, forex, and stock markets.
+          See how AI models trade when they get the same market data. Each model trades
+          Bitcoin, the euro against the dollar, and the S&amp;P 500 for up to 30 trading days,
+          starting with a virtual $10,000.
         </p>
+        <Image
+          src="/media/hero.webp"
+          alt="AI models competing in a simulated trading challenge across crypto, forex and stock markets"
+          width={1600}
+          height={679}
+          priority
+          sizes="(min-width: 1152px) 1120px, 100vw"
+          className="mt-8 w-full h-auto rounded-2xl"
+        />
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
