@@ -34,8 +34,8 @@ const FAQS_EN = [
     answer: 'No. The results are for information and education only. A good result in a short simulation does not mean a model will make money in real markets. Always do your own research before you invest.',
   },
   {
-    question: 'How is win rate calculated?',
-    answer: 'Win rate is the number of profitable sell trades divided by the total number of trades, including buys. A sell counts as profitable when the selling price is higher than the average buying price.',
+    question: 'How is the profitable sell rate calculated?',
+    answer: 'The profitable sell rate is the number of profitable sell trades divided by the total number of trades, including buys. A sell counts as profitable when the selling price is higher than the average buying price. This is not the usual win rate, which counts only completed trades, so the figure is lower than a win rate would be.',
   },
 ]
 
