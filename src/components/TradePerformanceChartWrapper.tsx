@@ -1,6 +1,7 @@
 "use client"
 
 import { TradePerformanceChart } from './TradePerformanceChart'
+import type { Lang } from '@/lib/content'
 
 interface RunData {
   id: string
@@ -16,8 +17,9 @@ interface RunData {
 interface Props {
   runs: RunData[]
   marketColor: string
+  lang: Lang
 }
 
-export function TradePerformanceChartWrapper({ runs, marketColor }: Props) {
-  return <TradePerformanceChart runs={runs} marketColor={marketColor} />
+export function TradePerformanceChartWrapper({ runs, marketColor, lang }: Props) {
+  return <TradePerformanceChart runs={runs} marketColor={marketColor} lang={lang} />
 }

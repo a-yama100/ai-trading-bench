@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { UI, type Lang } from '@/lib/content'
 
-export function ScrollToTop() {
+export function ScrollToTop({ lang }: { lang: Lang }) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export function ScrollToTop() {
     <button
       onClick={scrollToTop}
       className="fixed bottom-6 right-6 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 z-50 cursor-pointer"
-      aria-label="Scroll to top"
+      aria-label={UI[lang].scrollTop}
     >
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />

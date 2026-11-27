@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from 'recharts'
+import { UI, type Lang } from '@/lib/content'
 
 interface PerformanceData {
   category: string
@@ -21,13 +22,15 @@ interface PerformanceData {
 
 interface ModelPerformanceChartProps {
   data: PerformanceData[]
+  lang: Lang
 }
 
-export function ModelPerformanceChart({ data }: ModelPerformanceChartProps) {
+export function ModelPerformanceChart({ data, lang }: ModelPerformanceChartProps) {
+  const t = UI[lang].modelChart
   if (data.length === 0) {
     return (
       <div className="h-64 flex items-center justify-center bg-gray-100 rounded text-gray-400">
-        No benchmark data available for this model.
+        {t.noData}
       </div>
     )
   }
@@ -54,7 +57,7 @@ export function ModelPerformanceChart({ data }: ModelPerformanceChartProps) {
             tick={{ fontSize: 12 }}
           />
           <Tooltip
-            formatter={(value) => [value + '%', 'Return']}
+            formatter={(value) => [value + '%', t.return]}
             contentStyle={{ fontSize: 12 }}
           />
           <Bar dataKey="return" radius={[4, 4, 0, 0]}>

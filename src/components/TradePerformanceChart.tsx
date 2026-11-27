@@ -10,6 +10,7 @@ import {
   Line,
   ReferenceLine,
 } from 'recharts'
+import { UI, dateLocale, type Lang } from '@/lib/content'
 
 interface RunData {
   id: string
@@ -25,6 +26,7 @@ interface RunData {
 interface TradeChartProps {
   runs: RunData[]
   marketColor: string
+  lang: Lang
 }
 
 interface DailyDataPoint {
@@ -39,11 +41,12 @@ interface DailyDataPoint {
   trade_pnl: number | null
 }
 
-export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
+export function TradePerformanceChart({ runs, marketColor, lang }: TradeChartProps) {
+  const t = UI[lang].tradeChart
   if (runs.length === 0) {
     return (
       <div className="h-64 flex items-center justify-center bg-gray-100 rounded text-gray-400">
-        No benchmark data available
+        {t.noData}
       </div>
     )
   }
@@ -86,7 +89,7 @@ export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
       {dailyData.length > 0 ? (
         <>
           <div>
-            <h3 className="text-sm font-medium text-gray-500 mb-3">Portfolio Value Over Time</h3>
+            <h3 className="text-sm font-medium text-gray-500 mb-3">{t.portfolioTitle}</h3>
             <div className="[&_svg]:outline-none [&_*]:outline-none">
               <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={portfolioChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -94,7 +97,7 @@ export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
                   <XAxis 
                     dataKey="day" 
                     tick={{ fontSize: 11 }} 
-                    label={{ value: 'Day', position: 'insideBottom', offset: -5, fontSize: 11 }}
+                    label={{ value: t.dayAxis, position: 'insideBottom', offset: -5, fontSize: 11 }}
                   />
                   <YAxis 
                     tickFormatter={(value) => '$' + (value / 1000).toFixed(1) + 'k'} 
@@ -102,8 +105,8 @@ export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
                     domain={['dataMin - 200', 'dataMax + 200']}
                   />
                   <Tooltip
-                    formatter={(value) => ['$' + Number(value).toLocaleString(), 'Portfolio']}
-                    labelFormatter={(label) => 'Day ' + label}
+                    formatter={(value) => ['$' + Number(value).toLocaleString(), t.portfolio]}
+                    labelFormatter={(label) => t.dayLabel(label)}
                     contentStyle={{ fontSize: 12 }}
                   />
                   <ReferenceLine y={initialBalance} stroke="#9ca3af" strokeDasharray="5 5" />
@@ -128,19 +131,19 @@ export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
             </div>
             <div className="flex justify-center gap-6 mt-2 text-xs text-gray-500">
               <span className="flex items-center gap-1">
-                <span className="w-3 h-3 rounded-full bg-green-500"></span> Buy
+                <span className="w-3 h-3 rounded-full bg-green-500"></span> {t.buy}
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-3 h-3 rounded-full bg-red-500"></span> Sell
+                <span className="w-3 h-3 rounded-full bg-red-500"></span> {t.sell}
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-6 border-t-2 border-dashed border-gray-400"></span> Initial Balance
+                <span className="w-6 border-t-2 border-dashed border-gray-400"></span> {t.initialBalance}
               </span>
             </div>
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-500 mb-3">Cumulative P&L (%)</h3>
+            <h3 className="text-sm font-medium text-gray-500 mb-3">{t.pnlTitle}</h3>
             <div className="[&_svg]:outline-none [&_*]:outline-none">
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={pnlChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -148,15 +151,15 @@ export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
                   <XAxis 
                     dataKey="day" 
                     tick={{ fontSize: 11 }}
-                    label={{ value: 'Day', position: 'insideBottom', offset: -5, fontSize: 11 }}
+                    label={{ value: t.dayAxis, position: 'insideBottom', offset: -5, fontSize: 11 }}
                   />
                   <YAxis 
                     tickFormatter={(value) => value + '%'} 
                     tick={{ fontSize: 11 }}
                   />
                   <Tooltip
-                    formatter={(value) => [value + '%', 'P&L']}
-                    labelFormatter={(label) => 'Day ' + label}
+                    formatter={(value) => [value + '%', t.pnl]}
+                    labelFormatter={(label) => t.dayLabel(label)}
                     contentStyle={{ fontSize: 12 }}
                   />
                   <ReferenceLine y={0} stroke="#9ca3af" strokeDasharray="5 5" />
@@ -183,29 +186,29 @@ export function TradePerformanceChart({ runs, marketColor }: TradeChartProps) {
         </>
       ) : (
         <div className="bg-gray-50 rounded-lg p-8 text-center text-gray-500">
-          <p>Daily trading data not available for this run.</p>
-          <p className="text-sm mt-2">Run a new benchmark with --save to see detailed charts.</p>
+          <p>{t.noDaily}</p>
+          <p className="text-sm mt-2">{t.noDailyHint}</p>
         </div>
       )}
 
       <div>
-        <h3 className="text-sm font-medium text-gray-500 mb-3">Run History</h3>
+        <h3 className="text-sm font-medium text-gray-500 mb-3">{t.historyTitle}</h3>
         <div className="[&_svg]:outline-none [&_*]:outline-none">
           <ResponsiveContainer width="100%" height={150}>
             <LineChart 
               data={runs.map((r, i) => ({
                 run: runs.length - i,
                 return: Number(r.return_pct.toFixed(2)),
-                date: new Date(r.finished_at).toLocaleDateString(),
+                date: new Date(r.finished_at).toLocaleDateString(dateLocale(lang)),
               })).reverse()} 
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="run" tick={{ fontSize: 11 }} label={{ value: 'Run #', position: 'insideBottom', offset: -5, fontSize: 11 }} />
+              <XAxis dataKey="run" tick={{ fontSize: 11 }} label={{ value: t.runAxis, position: 'insideBottom', offset: -5, fontSize: 11 }} />
               <YAxis tickFormatter={(value) => value + '%'} tick={{ fontSize: 11 }} />
               <Tooltip
-                formatter={(value) => [value + '%', 'Return']}
-                labelFormatter={(label) => 'Run #' + label}
+                formatter={(value) => [value + '%', t.return]}
+                labelFormatter={(label) => t.runLabel(label)}
                 contentStyle={{ fontSize: 12 }}
               />
               <ReferenceLine y={0} stroke="#9ca3af" strokeDasharray="5 5" />
